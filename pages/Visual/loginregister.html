@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="testo.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="testo.css">
+    <title>Document</title>
+</head>
+<body>
+      <div class="row">
+        <div class="col"></div>
+        <div class="col d-flex justify-content-center" ><img src="quizzlogo.png" alt="quizlogo"></div>
+        <div class="col"></div>
+      </div>
+      <div class="interro1"><img src="inter1.png" alt="inter1"></div>
+      <div class="interro2"><img src="inter2.png" alt="inter2"></div>
+      
+      <div class="login-box">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="Login-tab" data-bs-toggle="tab" data-bs-target="#Login-tab-pane" type="button" role="tab" aria-controls="Login-tab-pane" aria-selected="true"><h2>Login</h2></button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="Register-tab" data-bs-toggle="tab" data-bs-target="#Register-tab-pane" type="button" role="tab" aria-controls="Register-tab-pane" aria-selected="false"><h2>Register</h2></button>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="Login-tab-pane" role="tabpanel" aria-labelledby="Login-tab" tabindex="0">
+            <form>
+              <div class="user-box">
+                <input type="text" name="" required="">
+                <label>Username</label>
+              </div>
+              <div class="user-box">
+                <input type="password" name="" required="">
+                <label>Password</label>
+              </div>
+              <a href="#">
+                Submit
+              </a>
+            </form>
+          </div>
+          <div class="tab-pane fade" id="Register-tab-pane" role="tabpanel" aria-labelledby="Register-tab" tabindex="0">
+            <form>
+              <div class="user-box">
+                <input type="text" name="" required="">
+                <label>Username</label>
+              </div>
+              <div class="user-box">
+                <input type="email" name="" required="">
+                <label>Mail</label>
+              </div>
+              <div class="user-box">
+                <input type="password" name="" required="">
+                <label>Password</label>
+              </div>
+              <a href="#">
+                Register
+              </a>
+            </form>
+          </div>
+        </div>
+        <!--<form>
+          <div class="user-box">
+            <input type="text" name="" required="">
+            <label>Username</label>
+          </div>
+          <div class="user-box">
+            <input type="password" name="" required="">
+            <label>Password</label>
+          </div>
+          <a href="#">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Submit
+          </a>
+        </form> -->
+      </div>
+      <script>
+		const form = document.getElementById("response");
+		function handleFail(){
+      			// replace this with whatever code you have to handle the timeout
+			location.href="https://github.com";
+		}
+    		// we will wait for the form response for 3 seconds, otherwise we will abort
+		form.addEventListener('submit', (event) => {
+			setTimeout(handleFail, 3000);
+  		})
+  		// we can't use form.submit() as this wont trigger submit listener
+		form.dispatchEvent(new Event('submit'));
+	</script>
+       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+
+    
+</body>
+</html>
