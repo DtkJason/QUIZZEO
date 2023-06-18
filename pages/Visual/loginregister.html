@@ -9,6 +9,7 @@
     <title>Document</title>
 </head>
 <body>
+      
       <div class="row">
         <div class="col"></div>
         <div class="col d-flex justify-content-center" ><img src="quizzlogo.png" alt="quizlogo"></div>
@@ -18,7 +19,8 @@
       <div class="interro1"><img src="inter1.png" alt="inter1"></div>
       <div class="interro2"><img src="inter2.png" alt="inter2"></div>
       
-      <div class="login-box">
+      <div class="row border login-box">
+      
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="Login-tab" data-bs-toggle="tab" data-bs-target="#Login-tab-pane" type="button" role="tab" aria-controls="Login-tab-pane" aria-selected="true"><h2>Login</h2></button>
@@ -63,24 +65,30 @@
             </form>
           </div>
         </div>
-        <!--<form>
-          <div class="user-box">
-            <input type="text" name="" required="">
-            <label>Username</label>
-          </div>
-          <div class="user-box">
-            <input type="password" name="" required="">
-            <label>Password</label>
-          </div>
-          <a href="#">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Submit
-          </a>
-        </form> -->
+        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+          <a class="nav-link" href="../mapping/Adminpage.html"><button type="button" class="btn btn-danger">Admin-page</button></a>
+          <button type="button" class="btn btn-warning">Middle</button>
+          <button type="button" class="btn btn-success">Right</button>
+        </div>
+        <ul class="nav-bar">
+          <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="index.html"><button>logregist-page</button></a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link" href="Adminpage.html"><button></button></a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link" href="Quizzerpage.html"><button>Quizzer-page</button></a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link "  href="userpage.html"><button>User-page</button></a>
+          </li>
+      </ul>
+        <!--
+           -->
       </div>
+      
+      
       <script src="darkmod.js"></script>
       <script>
 		const form = document.getElementById("response");

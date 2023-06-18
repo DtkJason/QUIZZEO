@@ -1,0 +1,21 @@
+html {
+    height: 100%;
+  }
+body {
+    margin:0;
+    padding:0;
+    font-family: sans-serif;
+    background: linear-gradient(#caf0f8, #00b4d8) ;
+    transition:  300ms;
+  }
+  .navi{
+    border-bottom: 2px solid #195163;
+    border-left: 1px solid #37768b;
+    border-right: 1px solid #37768b;
+    outline: none;
+    background-color: #19506356;
+    padding: 10px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+
+  }
