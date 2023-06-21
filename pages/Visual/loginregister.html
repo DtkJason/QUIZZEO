@@ -9,15 +9,18 @@
     <title>Document</title>
 </head>
 <body>
+      
       <div class="row">
         <div class="col"></div>
         <div class="col d-flex justify-content-center" ><img src="quizzlogo.png" alt="quizlogo"></div>
         <div class="col"></div>
       </div>
+      <div class="icn"><img onclick="darkmd()" src="dark-mode.svg" width="50px" height="50px" alt=""></div><br>
       <div class="interro1"><img src="inter1.png" alt="inter1"></div>
       <div class="interro2"><img src="inter2.png" alt="inter2"></div>
       
-      <div class="login-box">
+      <div class="row border login-box">
+      
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="Login-tab" data-bs-toggle="tab" data-bs-target="#Login-tab-pane" type="button" role="tab" aria-controls="Login-tab-pane" aria-selected="true"><h2>Login</h2></button>
@@ -62,24 +65,31 @@
             </form>
           </div>
         </div>
-        <!--<form>
-          <div class="user-box">
-            <input type="text" name="" required="">
-            <label>Username</label>
-          </div>
-          <div class="user-box">
-            <input type="password" name="" required="">
-            <label>Password</label>
-          </div>
-          <a href="#">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Submit
-          </a>
-        </form> -->
+        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+          <a class="nav-link" href="../mapping/Adminpage.html"><button type="button" class="btn btn-danger">Admin-page</button></a>
+          <button type="button" class="btn btn-warning">Middle</button>
+          <button type="button" class="btn btn-success">Right</button>
+        </div>
+        <ul class="nav-bar">
+          <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="index.html"><button>logregist-page</button></a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link" href="Adminpage.html"><button></button></a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link" href="Quizzerpage.html"><button>Quizzer-page</button></a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link "  href="userpage.html"><button>User-page</button></a>
+          </li>
+      </ul>
+        <!--
+           -->
       </div>
+      
+      
+      <script src="darkmod.js"></script>
       <script>
 		const form = document.getElementById("response");
 		function handleFail(){
@@ -92,10 +102,12 @@
   		})
   		// we can't use form.submit() as this wont trigger submit listener
 		form.dispatchEvent(new Event('submit'));
+    
 	</script>
+  
        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
-
+    
     
 </body>
 </html>
