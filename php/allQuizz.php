@@ -12,15 +12,15 @@ if (empty($_SESSION["id"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Administrateur</title>
+    <title>Liste des Quizz</title>
 </head>
 
 <body>
-    <h1>Gérer les membres</h1>
+    <h1>Liste de tous les Quizz</h1>
 
     <?php
-    $display = new Admin();
-    $display->displayUsers();
+    $display = new Quizz();
+    $display->displayAllQuizz();
     ?>
 
 </body>
