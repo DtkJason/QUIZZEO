@@ -6,40 +6,40 @@ var x = 1;
 let indq = 1;
 
 
-function addquest(){
-  var button = document.getElementById('addo');
-  button.addEventListener('click', function() {
-    x++ ;
-  });
+// function addquest(){
+//   var button = document.getElementById('addo');
+//   button.addEventListener('click', function() {
+//     x++ ;
+//   });
   
   
-  var newForm = document.createElement('form');
-  newForm.setAttribute('id',  );
+//   var newForm = document.createElement('form');
+//   newForm.setAttribute('id',  );
 
   
  
-  nformu.appendChild(newForm);
+//   nformu.appendChild(newForm);
 
-      var nfifi = document.getElementsById(x);
-        var nfifi = document.createElement('input');
-        nfifi.setAttribute('type','text');
-        nfifi.setAttribute('name','text');
-        nfifi.setAttribute('class','text');
-        nfifi.setAttribute('siz',50);
-        nfifi.setAttribute('placeholder','Optional Field');
+//       var nfifi = document.getElementsById(x);
+//         var nfifi = document.createElement('input');
+//         nfifi.setAttribute('type','text');
+//         nfifi.setAttribute('name','text');
+//         nfifi.setAttribute('class','text');
+//         nfifi.setAttribute('siz',50);
+//         nfifi.setAttribute('placeholder','Optional Field');
         
-        (x).appendChild(nfifi);
-        var br = document.createElement("br");
+//         (x).appendChild(nfifi);
+//         var br = document.createElement("br");
         
         
-        const elementQuestion = document.querySelectorAll('.DivQuestion')
+//         const eQ = document.querySelectorAll('.DivQuestion')
 
-}
+// }
 
 function ajout(){
 
-  const elementQuestion = document.querySelectorAll('.divoq')
-        for(let i_quest=1; i_quest<=elementQuestion.length; i_quest++){
+  const eQ = document.querySelectorAll('.divoq')
+        for(let i_quest=1; i_quest<=eQ.length; i_quest++){
             indq = i_quest
         }
         indq++
@@ -66,12 +66,40 @@ function ajout(){
     const nblabel = document.createTextNode(`  - Entrer une reponse: `)
   blabel.appendChild(nblabel)
     
-  const repn = document.createElement('input');
-        repn.type = 'text';
-        repn.className = `Repons${indq}`;
-        repn.name = `Repons${indq}`;
-        repn.placeholder = 'entre un truc';
-        repn.required = true;
+  const rep1n = document.createElement('input');
+        rep1n.type = 'text';
+        rep1n.className = `BRepons${indq}`;
+        rep1n.name = `BRepons${indq}`;
+        rep1n.placeholder = 'entre la bonne reponse';
+        rep1n.required = true;
+
+        const rep2n = document.createElement('input');
+        rep2n.type = 'text';
+        rep2n.className = `MRepons1-${indq}`;
+        rep2n.name = `MRepons1-${indq}`;
+        rep2n.placeholder = 'entre une mauvaise reponse';
+        rep2n.required = true;
+
+        const rep3n = document.createElement('input');
+        rep3n.type = 'text';
+        rep3n.className = `MRepons2-${indq}`;
+        rep3n.name = `MRepons2-${indq}`;
+        rep3n.placeholder = 'entre une mauvaise repponse';
+        rep3n.required = true;
+
+        const rep4n = document.createElement('input');
+        rep4n.type = 'text';
+        rep4n.className = `MRepons3-${indq}`;
+        rep4n.name = `MRepons3-${indq}`;
+        rep4n.placeholder = 'entre une mauvaise repponse';
+        rep4n.required = true;
+
+        // const repn = document.createElement('input');
+        // repn.type = 'text';
+        // repn.className = `Repons${indq}`;
+        // repn.name = `Repons${indq}`;
+        // repn.placeholder = 'entre un truc';
+        // repn.required = true;
  
 
 
@@ -82,8 +110,13 @@ function ajout(){
         divo.appendChild(br.cloneNode());
         divo.appendChild(blabel);
         divo.appendChild(br.cloneNode());
-        divo.appendChild(repn);
+        divo.appendChild(rep1n);
         divo.appendChild(br.cloneNode());
+        divo.appendChild(rep2n);
+        divo.appendChild(br.cloneNode());
+        divo.appendChild(rep3n);
+        divo.appendChild(br.cloneNode());
+        divo.appendChild(rep4n);
         divo.appendChild(br.cloneNode());
   nformi.appendChild(divo);
 }

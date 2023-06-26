@@ -34,15 +34,21 @@
         </div>
         <div class="modob modal-body">
             <div class="divoq divoq1">
-                <form>
-                    <div id="field">
-                        <label>Title</label>
-                        <input type="text" name="title" required=""> <br><br>
+                <form method="POST">
+                  <label>Title</label>
+                  <input type="text" name="title" required=""> <br><br>
+                      <div id="field">
+                        
                         <label>Question</label><br>
                         <input type="text" name="question n°1" required=""> <br>
                         <label>Reponse</label><br>
                         <input id="rep" type="text" name="text" class="text"  placeholder="entrer une reponse"><br>
                         <input type="radio" name="bad" required="" placeholder="entrer une mauvaise reponse"> <br>
+                    </div>
+                    <br>
+                    <span>autre question</span>
+                    <div id="nformi">
+                      <input type="submit" name="" id="">
                     </div>
                 </form>
                 <div id="nformu">
@@ -54,10 +60,7 @@
                     <button class="add"  onclick="add()">Ajoute une reponse</button>
                     <button class="remove" onclick="remove()">suppr une reponse</button>
                     <!-- <button class="addquest" id="addo" onclick="addquest()">add question</button> -->
-                  </div><br><br>
-                  <span>autre question</span>
-                  <div id="nformi">
-                  </div>
+                  </div><br>
                   <div class="controlss">
                     <button class="ajout"  onclick="ajout()">Ajout une question</button>
                     <button class="suppr" onclick="suppr()">suppr les question</button>
@@ -114,3 +117,4 @@
     <script src="quiz.js"></script>
 </body>
 </html>
+
