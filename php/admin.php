@@ -9,10 +9,6 @@ if ($_SESSION["role"] != 0) {
     header("Location: accessDenied.php");
 }
 
-if (isset($_POST["disconnect"])) {
-    session_destroy();
-    header("Location: login.php");
-}
 ?>
 
 <!DOCTYPE html>
@@ -24,17 +20,13 @@ if (isset($_POST["disconnect"])) {
     <title>Administrateur</title>
 </head>
 
+<?php
+require "headerAdmin.php";
+?>
+
 <body>
     <h1>Administrateur</h1>
-
-    <a href="adminPage.php">Gérer les membres</a>
-    <a href="allQuizzAdmin.php">Liste des Quizz</a>
-
-    <form method="POST">
-        <button name="disconnect">
-            Déconnexion
-        </button>
-    </form>
+    <p>Bienvenue sur Quizzeo, le site qui permet de créer des Quizz</p>
 </body>
 
 </html>

@@ -8,11 +8,6 @@ if (empty($_SESSION["id"])) {
 if ($_SESSION["role"] != 1) {
     header("Location: accessDenied.php");
 }
-
-if (isset($_POST["disconnect"])) {
-    session_destroy();
-    header("Location: login.php");
-}
 ?>
 
 <!DOCTYPE html>
@@ -24,18 +19,13 @@ if (isset($_POST["disconnect"])) {
     <title>Quizzer</title>
 </head>
 
+<?php
+require "headerQuizzer.php";
+?>
+
 <body>
     <h1>Quizzer</h1>
-
-    <a href="quiztest.php">Créer un Quizz</a>
-    <a href="allQuizz.php">Liste de tous les Quizz</a>
-    <a href="allPersonnalQuizz.php">Liste de mes Quizz</a>
-
-    <form method="POST">
-        <button name="disconnect">
-            Déconnexion
-        </button>
-    </form>
+    <p>Bienvenue sur Quizzeo, le site qui permet de créer des Quizz</p>
 </body>
 
 </html>

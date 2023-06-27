@@ -31,25 +31,19 @@ if (isset($_POST["submit"])) {
     <title>Connexion</title>
   </head>
 
-  <body>
-    <div class="login-box">
-      <h2>CONNEXION</h2>
-      <form method="POST">
-        <div class="user-box">
-          <input type="mail" name="email" />
-          <br />
-          <label>Email : </label>
-          <br /><br />
-        </div>
-        <div class="user-box">
-          <input type="password" name="password" />
-          <br />
-          <label>Mot de passe : </label>
-          <br /><br />
-        </div>
-        <input type="ubmit" name="submit" value="Se connecter" /><br />
-        <a href="register.php">S'incrire</a>
-      </form>
-    </div>
-  </body>
+<body>
+    <form method="POST">
+        <label for="mail">Email : </label>
+        <br>
+        <input type="mail" name="email">
+        <br><br>
+        <label for="password">Mot de passe : </label>
+        <br>
+        <input type="password" name="password">
+        <br><br>
+        <input type="submit" name="submit">
+    </form>
+    <a href="register.php">S'incrire</a>
+</body>
+
 </html>

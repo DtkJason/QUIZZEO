@@ -1,6 +1,16 @@
 <!-- <?php
 require "classes.php";
 
+if (!empty($_SESSION["id"])) {
+    if ($_SESSION["role"] == 0) {
+        header("Location: admin.php");
+    } elseif ($_SESSION["id"] == 1) {
+        header("Location: quizzer.php");
+    } else {
+        header("Location: user.php");
+    }
+}
+
 $register = new Authentification();
 
 if (isset($_POST["submit"])) {
@@ -23,66 +33,36 @@ if (isset($_POST["submit"])) {
     <title>Inscription</title>
   </head>
 
-  <body>
-    <div class="login-box">
-      <h2>INSCRIPTION</h2>
-      <!-- <form method="POST">
-          <div class="user-box">
-            <input type="mail" name="email" />
-            <br />
-            <label>Email : </label>
-            <br /><br />
-          </div>
-          <div >
-            <input type="password" name="password" />
-            <br />
-            <label>Mot de passe : </label>
-            <br /><br />
-          </div>
-          <input type="ubmit" name="submit" value="Se connecter" /><br />
-          <a href="register.php">S'incrire</a>
-        </form> -->
-
-      <form method="POST">
-        <div class="user-box">
-          <input type="text" name="pseudo" required="" />
-          <label>Entrez votre pseudo </label>
-        </div>
-        <div class="user-box">
-          <input type="mail" name="email" required="" />
-          <br />
-          <label for="mail">Entrez votre email </label>
-          <br />
-        </div>
-        <div class="user-box">
-          <input type="password" name="password" required="" />
-          <br />
-          <label for="password">Entrez votre mot de passe </label>
-          <br />
-        </div>
-        <div class="user-box">
-          <input type="password" name="confirmpassword" required="" />
-          <br />
-          <label for="confirmpassword">Confirmez votre mot de passe </label>
-          <br />
-        </div>
-        <label class="labelselect" for="role"
-          >Choisissez votre rôle (Quizzer : créer des quizz, jouer ; Utilisateur
-          : jouer) :
-        </label>
-        <br /><br />
-        <div class="select">
-          <select name="role">
+<body>
+    <form method="POST">
+        <label for="pseudo">Entrez votre pseudo : </label>
+        <br>
+        <input type="text" name="pseudo">
+        <br><br>
+        <label for="mail">Entrez votre email : </label>
+        <br>
+        <input type="mail" name="email">
+        <br><br>
+        <label for="password">Entrez votre mot de passe : </label>
+        <br>
+        <input type="password" name="password">
+        <br><br>
+        <label for="confirmpassword">Confirmez votre mot de passe : </label>
+        <br>
+        <input type="password" name="confirmpassword">
+        <br><br>
+        <label for="role">Choisissez votre rôle (Quizzer : créer des quizz, jouer ; Utilisateur : jouer) : </label>
+        <br>
+        <select name="role">
             <option value=""></option>
             <option value="1">Quizzer</option>
             <option value="2">Uitilsateur</option>
-          </select>
-          <div class="select_arrow"></div>
-        </div>
+        </select>
+        <br><br>
+        <input type="submit" name="submit" value="Valider">
+    </form>
+    <a href="login.php">Cliquer ici si vous êtes déjà inscrit(e)</a>
 
-        <input class="submit" name="submit" value="Valider" />
-        <a href="login.php">Cliquer ici si vous êtes déjà inscrit(e)</a>
-      </form>
-    </div>
-  </body>
+</body>
+
 </html>

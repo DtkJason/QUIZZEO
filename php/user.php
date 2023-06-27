@@ -24,16 +24,13 @@ if (isset($_POST["disconnect"])) {
     <title>Utilisateur</title>
 </head>
 
+<?php
+require "headerUser.php";
+?>
+
 <body>
     <h1>Utilisateur</h1>
-
-    <a href="allQuizz.php">Liste des Quizz</a>
-
-    <form method="POST">
-        <button name="disconnect">
-            Déconnexion
-        </button>
-    </form>
+    <p>Bienvenue sur Quizzeo, le site qui permet de créer des Quizz</p>
 </body>
 
 </html>

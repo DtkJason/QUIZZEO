@@ -4,6 +4,9 @@ require "classes.php";
 if (empty($_SESSION["id"])) {
     header("Location: login.php");
 }
+if ($_SESSION["role"] != 2) {
+    header("Location: accesDenied.php");
+}
 ?>
 
 <!DOCTYPE html>
