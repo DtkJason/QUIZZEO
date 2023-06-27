@@ -31,7 +31,7 @@
         </ul>
         <div class="tab-content" id="myTabContent">
           <div class="tab-pane fade show active" id="Login-tab-pane" role="tabpanel" aria-labelledby="Login-tab" tabindex="0">
-            <form class="userbox">
+            <form>
               <div class="user-box">
                 <input type="text" name="" required="">
                 <label>Username</label>
@@ -46,7 +46,7 @@
             </form>
           </div>
           <div class="tab-pane fade" id="Register-tab-pane" role="tabpanel" aria-labelledby="Register-tab" tabindex="0">
-            <form class="userbox">
+            <form>
               <div class="user-box">
                 <input type="text" name="" required="">
                 <label>Username</label>

@@ -22,3 +22,25 @@ body {
   .modof{
     background-color: rgb(127, 190, 209);
   }
+
+  input{
+    background-color: #cfd9db6f;
+    -webkit-appearance: none;
+    width: 100%;
+    border: 1px solid rgba(2, 97, 91, 0.108);
+    font-family: inherit;
+    margin-top: 2px;
+    padding: 3px;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 500;
+ 
+    border-radius: 10px;
+    color: #223254;
+    transition: all .15s ease;
+  
+        
+::placeholder{
+  color: #0a2c75;
+}
+  }
