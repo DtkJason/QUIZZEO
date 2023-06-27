@@ -1,6 +1,16 @@
 <?php
 require "classes.php";
 
+if (!empty($_SESSION["id"])) {
+    if ($_SESSION["role"] == 0) {
+        header("Location: admin.php");
+    } elseif ($_SESSION["id"] == 1) {
+        header("Location: quizzer.php");
+    } else {
+        header("Location: user.php");
+    }
+}
+
 $register = new Authentification();
 
 if (isset($_POST["submit"])) {
@@ -16,6 +26,10 @@ if (isset($_POST["submit"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription</title>
 </head>
+
+<?php
+require "headerOffline.php";
+?>
 
 <body>
     <form method="POST">
@@ -45,8 +59,6 @@ if (isset($_POST["submit"])) {
         <br><br>
         <input type="submit" name="submit" value="Valider">
     </form>
-    <a href="login.php">Cliquer ici si vous êtes déjà inscrit(e)</a>
-
 </body>
 
 </html>

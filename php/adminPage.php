@@ -4,6 +4,16 @@ require "classes.php";
 if (empty($_SESSION["id"])) {
     header("Location: login.php");
 }
+if ($_SESSION["role"] != 0) {
+    header("Location: accessDenied.php");
+}
+
+if (!empty($_GET["delete"]) && !empty($_GET["pseudoDelete"])) {
+    $pseudoDelete = $_GET["pseudoDelete"];
+    echo '<script type="text/javascript">';
+    echo 'alert("Utilisateur supprimé : ' . $pseudoDelete . '")';
+    echo '</script>';
+}
 ?>
 
 <!DOCTYPE html>
@@ -15,8 +25,12 @@ if (empty($_SESSION["id"])) {
     <title>Page Administrateur</title>
 </head>
 
+<?php
+require "headerAdmin.php";
+?>
+
 <body>
-    <h1>Gérer les membres</h1>
+    <h2>Gérer les membres</h2>
 
     <?php
     $display = new Admin();

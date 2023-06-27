@@ -4,6 +4,15 @@ require "classes.php";
 if (empty($_SESSION["id"])) {
     header("Location: login.php");
 }
+if ($_SESSION["role"] != 0) {
+    header("Location: accessDenied.php");
+}
+
+if (!empty($_GET["delete"])) {
+    echo '<script type="text/javascript">';
+    echo 'alert("Quizz supprimé")';
+    echo '</script>';
+}
 ?>
 
 <!DOCTYPE html>
@@ -15,8 +24,12 @@ if (empty($_SESSION["id"])) {
     <title>Liste des Quizz (Admin)</title>
 </head>
 
+<?php
+require "headerAdmin.php";
+?>
+
 <body>
-    <h1>Liste de tous les Quizz</h1>
+    <h2>Liste de tous les Quizz</h2>
 
     <?php
     $display = new Admin();

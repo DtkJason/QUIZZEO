@@ -41,6 +41,16 @@ if (isset($_POST["submit"])) {
   <title>Document</title>
 </head>
 
+<?php
+if ($_GET["role"] == 0) {
+  require "headerAdmin.php";
+}
+if ($_GET["role"] == 1) {
+  require "headerQuizzer.php";
+}
+
+?>
+
 <body>
   <h1>quizz page</h1>
 

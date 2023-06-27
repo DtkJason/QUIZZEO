@@ -2,7 +2,13 @@
 
 require "classes.php";
 
+$idUser = $_GET["id"];
+
 $member = new Admin();
 
-$member->updateOwnerQuizz($_GET["id"]);
-$member->deleteMember($_GET["id"]);
+$pseudo = $member->getUserPseudo($idUser);
+
+$member->updateOwnerQuizz($idUser);
+$member->deleteMember($idUser);
+
+header("Location: adminPage.php?delete=1&pseudoDelete=$pseudo");

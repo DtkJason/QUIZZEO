@@ -35,6 +35,10 @@ if (isset($_POST["submit"])) {
     <title>Connexion</title>
 </head>
 
+<?php
+require "headerOffline.php";
+?>
+
 <body>
     <form method="POST">
         <label for="mail">Email : </label>
@@ -45,9 +49,8 @@ if (isset($_POST["submit"])) {
         <br>
         <input type="password" name="password">
         <br><br>
-        <input type="submit" name="submit">
+        <input type="submit" name="submit" value="Valider">
     </form>
-    <a href="register.php">S'incrire</a>
 </body>
 
 </html>

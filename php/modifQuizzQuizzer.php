@@ -4,17 +4,19 @@ require "classes.php";
 if (empty($_SESSION["id"])) {
     header("Location: login.php");
 }
-if ($_SESSION["role"] == 1) {
-    header("Location: quizzer.php");
+if ($_SESSION["role"] == 0) {
+    header("Location: admin.php");
 }
 if ($_SESSION["role"] == 2) {
     header("Location: user.php");
 }
 
-$nbrQuestion = $_GET["nbrQuestion"];
 $idQuizz = $_GET["idQuizz"];
+$idUser = $_GET["idUser"];
 
 $modif = new Admin();
+
+$nbrQuestion = $modif->getNumberQuestion($idQuizz);
 
 if (!empty($_POST["nomQuizz"])) {
     $modif->editQuizzName($idQuizz, $_POST["nomQuizz"]);
@@ -39,7 +41,6 @@ for ($i = 1; $i <= $nbrQuestion; $i++) {
         }
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -48,13 +49,13 @@ for ($i = 1; $i <= $nbrQuestion; $i++) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modification de Quizz (Admin)</title>
+    <title>Modification de Quizz (Quizzer)</title>
 </head>
 
 <body>
     <?php
     $form = new Admin();
-    $form->editQuizzForm($_GET["idQuizz"]);
+    $form->editQuizzForm($idQuizz);
     ?>
 </body>
 
