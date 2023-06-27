@@ -35,11 +35,12 @@ if (isset($_POST["submit"])) {
     <title>Connexion</title>
 </head>
 
-<?php
-require "headerOffline.php";
-?>
 
 <body>
+    <?php
+    require "headerOffline.php";
+    ?>
+
     <form method="POST">
         <label for="mail">Email : </label>
         <br>
@@ -51,6 +52,10 @@ require "headerOffline.php";
         <br><br>
         <input type="submit" name="submit" value="Valider">
     </form>
+
+    <?php
+    require "footer.php";
+    ?>
 </body>
 
 </html>

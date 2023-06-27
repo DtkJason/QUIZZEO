@@ -4,9 +4,10 @@ require "classes.php";
 if (empty($_SESSION["id"])) {
     header("Location: login.php");
 }
-if ($_SESSION["role"] != 2) {
-    header("Location: accesDenied.php");
+if ($_SESSION["role"] == 0) {
+    header("Location: accessDenied.php");
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -18,14 +19,27 @@ if ($_SESSION["role"] != 2) {
     <title>Liste des Quizz</title>
 </head>
 
+
 <body>
-    <h1>Liste de tous les Quizz</h1>
+    <?php
+    if ($_SESSION["role"] == 1) {
+        require "headerQuizzer.php";
+    }
+    if ($_SESSION["role"] == 2) {
+        require "headerUser.php";
+    }
+    ?>
+
+    <h2>Liste de tous les Quizz</h2>
 
     <?php
     $display = new Quizz();
     $display->displayAllQuizz();
     ?>
 
+    <?php
+    require "footer.php";
+    ?>
 </body>
 
 </html>

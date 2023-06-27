@@ -27,11 +27,12 @@ if (isset($_POST["submit"])) {
     <title>Inscription</title>
 </head>
 
-<?php
-require "headerOffline.php";
-?>
 
 <body>
+    <?php
+    require "headerOffline.php";
+    ?>
+
     <form method="POST">
         <label for="pseudo">Entrez votre pseudo : </label>
         <br>
@@ -59,6 +60,10 @@ require "headerOffline.php";
         <br><br>
         <input type="submit" name="submit" value="Valider">
     </form>
+
+    <?php
+    require "footer.php";
+    ?>
 </body>
 
 </html>

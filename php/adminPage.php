@@ -25,11 +25,11 @@ if (!empty($_GET["delete"]) && !empty($_GET["pseudoDelete"])) {
     <title>Page Administrateur</title>
 </head>
 
-<?php
-require "headerAdmin.php";
-?>
 
 <body>
+    <?php
+    require "headerAdmin.php";
+    ?>
     <h2>Gérer les membres</h2>
 
     <?php
@@ -37,6 +37,10 @@ require "headerAdmin.php";
     $display->displayUsers();
     ?>
 
+    <?php
+    require "footer.php";
+    ?>
 </body>
+
 
 </html>

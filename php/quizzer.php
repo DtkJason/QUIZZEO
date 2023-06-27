@@ -19,13 +19,18 @@ if ($_SESSION["role"] != 1) {
     <title>Quizzer</title>
 </head>
 
-<?php
-require "headerQuizzer.php";
-?>
 
 <body>
-    <h1>Quizzer</h1>
+    <?php
+    require "headerQuizzer.php";
+    ?>
+
+    <h2>Quizzer</h2>
     <p>Bienvenue sur Quizzeo, le site qui permet de créer des Quizz</p>
+
+    <?php
+    require "footer.php";
+    ?>
 </body>
 
 </html>

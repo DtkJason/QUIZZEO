@@ -41,17 +41,18 @@ if (isset($_POST["submit"])) {
   <title>Document</title>
 </head>
 
-<?php
-if ($_GET["role"] == 0) {
-  require "headerAdmin.php";
-}
-if ($_GET["role"] == 1) {
-  require "headerQuizzer.php";
-}
 
-?>
 
 <body>
+  <?php
+  if ($_GET["role"] == 0) {
+    require "headerAdmin.php";
+  }
+  if ($_GET["role"] == 1) {
+    require "headerQuizzer.php";
+  }
+  ?>
+
   <h1>quizz page</h1>
 
   <h2>Q U I Z Z Z Z Z</h2><br>
@@ -160,6 +161,10 @@ if ($_GET["role"] == 1) {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 
   <script src="quiz1.js"></script>
+
+  <?php
+  require "footer.php";
+  ?>
 </body>
 
 </html>

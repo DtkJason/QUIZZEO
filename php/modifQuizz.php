@@ -53,8 +53,16 @@ for ($i = 1; $i <= $nbrQuestion; $i++) {
 
 <body>
     <?php
+    require "headerAdmin.php";
+    ?>
+
+    <?php
     $form = new Admin();
     $form->editQuizzForm($_GET["idQuizz"]);
+    ?>
+
+    <?php
+    require "footer.php";
     ?>
 </body>
 

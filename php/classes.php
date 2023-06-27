@@ -227,6 +227,7 @@ class Quizz extends ConnectionDB
             $idQuizz = $row["id_quizz"];
 
             echo "<td>" . $row["date_creation_quizz"] . "</td>";
+            echo "<td><a href='.php'>Jouer</a></td>";
             echo "<td><a href='modifQuizzQuizzer.php?idQuizz=$idQuizz&idUser=$idUserQuizz'>Modifier</a></td>";
             echo "<td><a href='deleteQuizz.php?idQuizz=$idQuizz'>Supprimer</a></td>";
             echo "</tr>";
@@ -453,7 +454,7 @@ class Admin extends ConnectionDB
         }
     }
 
-    public function editQuizzAdmin()
+    public function listQuizzAdmin()
     {
         $query16 = $this->bdd->prepare("SELECT * FROM quizz");
         $query16->execute();
@@ -503,6 +504,7 @@ class Admin extends ConnectionDB
             }
             echo "<td>" . $row["date_creation_quizz"] . "</td>";
             echo "<td>" . $userPseudo . "</td>";
+            echo "<td><a href='.php'>Jouer</a></td>";
             echo "<td><a href='modifQuizz.php?idQuizz=$idQuizz&nbrQuestion=$nbrQuestion'>Modifier</a></td>";
             echo "<td><a href='deleteQuizz.php?idQuizz=$idQuizz'>Supprimer</a></td>";
             echo "</tr>";

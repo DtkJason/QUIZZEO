@@ -19,13 +19,19 @@ if ($_SESSION["role"] != 1) {
 </head>
 
 <body>
-    <h1>Liste de vos Quizz</h1>
+    <?php
+    require "headerQuizzer.php";
+    ?>
+    <h2>Liste de vos Quizz</h2>
 
     <?php
     $display = new Quizz();
     $display->displayPersonnalQuizz($_SESSION["id"]);
     ?>
 
+    <?php
+    require "footer.php";
+    ?>
 </body>
 
 </html>

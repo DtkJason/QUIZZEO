@@ -24,18 +24,22 @@ if (!empty($_GET["delete"])) {
     <title>Liste des Quizz (Admin)</title>
 </head>
 
-<?php
-require "headerAdmin.php";
-?>
 
 <body>
+    <?php
+    require "headerAdmin.php";
+    ?>
+
     <h2>Liste de tous les Quizz</h2>
 
     <?php
     $display = new Admin();
-    $display->editQuizzAdmin();
+    $display->listQuizzAdmin();
     ?>
 
+    <?php
+    require "footer.php";
+    ?>
 </body>
 
 </html>

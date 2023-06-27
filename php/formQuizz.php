@@ -44,6 +44,10 @@ if (isset($_POST["submit"])) {
 </head>
 
 <body>
+    <?php
+    require "headerAdmin.php";
+    ?>
+
     <h1>Création de Quizz</h1>
     <form method="POST">
         <label>Titre du Quizz : </label>
@@ -90,6 +94,10 @@ if (isset($_POST["submit"])) {
         <br><br>
         <input type="submit" name="submit">
     </form>
+
+    <?php
+    require "footer.php";
+    ?>
 </body>
 
 </html>

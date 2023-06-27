@@ -29,6 +29,10 @@ if (!isset($_POST["newpseudo"])) {
 </head>
 
 <body>
+    <?php
+    require "headerAdmin.php";
+    ?>
+
     <h1>Modifier utilisateur : <?php echo $pseudo; ?></h1>
     <br>
     <form method="POST"><b>Modifier mot de passe :</b>
@@ -61,6 +65,10 @@ if (!isset($_POST["newpseudo"])) {
         <br><br>
         <input type="submit" name="submitemail">
     </form>
+
+    <?php
+    require "footer.php";
+    ?>
 </body>
 
 </html>
