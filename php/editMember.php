@@ -1,9 +1,9 @@
 <?php
 require "classes.php";
 
-if ((isset($_POST["password"]) && isset($_POST["newpassword"]) && isset($_POST["password"]))) {
+if (isset($_POST["newpassword"]) && isset($_POST["password"])) {
     $editPassword = new Admin();
-    $editPassword->editPassword($_POST["password"], $_POST["newpassword"], $_POST["confirmnewpassword"], $_GET["id"]);
+    $editPassword->editPassword($_POST["newpassword"], $_POST["confirmnewpassword"], $_GET["id"]);
 } elseif (isset($_POST["newpseudo"])) {
     $editPseudo = new Admin();
     $editPseudo->editPseudo($_POST["newpseudo"], $_GET["id"]);
@@ -32,10 +32,6 @@ if (!isset($_POST["newpseudo"])) {
     <h1>Modifier utilisateur : <?php echo $pseudo; ?></h1>
     <br>
     <form method="POST"><b>Modifier mot de passe :</b>
-        <br><br>
-        <label>Mot de passe actuel : </label>
-        <br>
-        <input type="password" name="password">
         <br><br>
         <label>Nouveau mot de passe : </label>
         <br>

@@ -13,7 +13,6 @@ if (isset($_POST["disconnect"])) {
     session_destroy();
     header("Location: login.php");
 }
-echo "ID : " . $_SESSION["id"];
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +27,9 @@ echo "ID : " . $_SESSION["id"];
 <body>
     <h1>Quizzer</h1>
 
-    <a href="formQuizz.php">Créer un Quizz</a>
+    <a href="quiztest.php">Créer un Quizz</a>
+    <a href="allQuizz.php">Liste de tous les Quizz</a>
+    <a href="allPersonnalQuizz.php">Liste de mes Quizz</a>
 
     <form method="POST">
         <button name="disconnect">
