@@ -227,7 +227,7 @@ class Quizz extends ConnectionDB
             $idQuizz = $row["id_quizz"];
 
             echo "<td>" . $row["date_creation_quizz"] . "</td>";
-            echo "<td><a href='.php'>Jouer</a></td>";
+            echo "<td><a href='playQuizDisplay.php?idQuizz=$idQuizz'>Afficher-jouer</a></td>";
             echo "<td><a href='modifQuizzQuizzer.php?idQuizz=$idQuizz&idUser=$idUserQuizz'>Modifier</a></td>";
             echo "<td><a href='deleteQuizz.php?idQuizz=$idQuizz'>Supprimer</a></td>";
             echo "</tr>";
@@ -504,7 +504,7 @@ class Admin extends ConnectionDB
             }
             echo "<td>" . $row["date_creation_quizz"] . "</td>";
             echo "<td>" . $userPseudo . "</td>";
-            echo "<td><a href='.php'>Jouer</a></td>";
+            echo "<td><a href='playQuizDisplay.php?idQuizz=$idQuizz'>Afficher-jouer</a></td>";
             echo "<td><a href='modifQuizz.php?idQuizz=$idQuizz&nbrQuestion=$nbrQuestion'>Modifier</a></td>";
             echo "<td><a href='deleteQuizz.php?idQuizz=$idQuizz'>Supprimer</a></td>";
             echo "</tr>";
@@ -547,7 +547,7 @@ class Admin extends ConnectionDB
         echo "</select><br><br><br>";
 
         $i = 1;
-
+        echo"<div id='nformi'>";
         foreach ($data11 as $row) {
             $idQuestion = $row["id_question"];
             $query21 = $this->bdd->prepare("SELECT * FROM question WHERE id_question = :idQuestion");
@@ -565,7 +565,7 @@ class Admin extends ConnectionDB
             } else {
                 $diffQuestion = "Difficile";
             }
-
+            echo"<div class='divoq divoq$i'>";
             echo "<label>Modifier Question $i ($intituleQuestion) : </label><br>";
             echo "<input type='text' name='question$i'><br><br>";
 
@@ -625,10 +625,17 @@ class Admin extends ConnectionDB
             echo "<label>Modifier Mauvaise Réponse $i-3 ($badAnswer3) : </label><br>";
             echo "<input type='text' name='mauvaisereponse$i-3'><br><br><br>";
             $i++;
+            echo"</div>";
         }
+        echo"</div>";
 
         echo "<input type='submit' name='submit'>";
-        echo "</form>";
+        echo "</form><br><br>";
+        echo"<div class='controlss'>";
+        echo"<button class='ajout'  onclick='ajout()'>Ajout une question</button>";
+        echo"<button class='suppr' onclick='suppr()'>suppr les question</button>";
+        echo"</div>";        
+
     }
 
     public function editQuizzName($idQuizz, $newTitreQuizz)
@@ -751,4 +758,102 @@ class Admin extends ConnectionDB
         $nbrQuestion = count($data18);
         return $nbrQuestion;
     }
+
+    
+//-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+//-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+     //Fonction qui permet d'afficher les questions et reponses
+     public function displayQuizzForm($idQuizz)
+     {
+        
+         $query19 = $this->bdd->prepare("SELECT * FROM quizz WHERE id_quizz = :idQuizz");
+         $query19->bindParam("idQuizz", $idQuizz);
+         $query19->execute();
+         $data10 = $query19->fetch(PDO::FETCH_ASSOC);
+ 
+         $titreQuizz = $data10["titre_quizz"];
+ 
+         $query20 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
+         $query20->bindParam("idQuizz", $idQuizz);
+         $query20->execute();
+         $data11 = $query20->fetchAll(PDO::FETCH_ASSOC);
+ 
+         echo "<h1>$titreQuizz</h1>";
+         echo "<form method='POST'>";
+
+ 
+         $i = 1;
+ 
+         foreach ($data11 as $row) {
+             $idQuestion = $row["id_question"];
+             $query21 = $this->bdd->prepare("SELECT * FROM question WHERE id_question = :idQuestion");
+             $query21->bindParam(":idQuestion", $idQuestion);
+             $query21->execute();
+             $data12 = $query21->fetch(PDO::FETCH_ASSOC);
+ 
+             $intituleQuestion = $data12['intitule_question'];
+             $idQuestion = $data12["id_question"];
+ 
+             echo "<p>Question $i : $intituleQuestion  </p><br>";
+
+ 
+ 
+             $bool = true;
+ 
+             $query22 = $this->bdd->prepare("SELECT * FROM choix WHERE id_question = :idQuestion AND bonneReponse_choix = :goodAnswer");
+             $query22->bindParam(":idQuestion", $idQuestion);
+             $query22->bindParam(":goodAnswer", $bool);
+             $query22->execute();
+             $data13 = $query22->fetch(PDO::FETCH_ASSOC);
+ 
+             $goodAnswer = $data13["reponse_choix"];
+             $goodAnswerId = $data13["id_choix"];
+ 
+             $badAnswerId1 = $goodAnswerId + 1;
+             $badAnswerId2 = $goodAnswerId + 2;
+             $badAnswerId3 = $goodAnswerId + 3;
+ 
+             $query23 = $this->bdd->prepare("SELECT * FROM choix WHERE id_choix = :idChoix");
+             $query23->bindParam(":idChoix", $badAnswerId1);
+             $query23->execute();
+             $data14 = $query23->fetch(PDO::FETCH_ASSOC);
+ 
+             $query24 = $this->bdd->prepare("SELECT * FROM choix WHERE id_choix = :idChoix");
+             $query24->bindParam(":idChoix", $badAnswerId2);
+             $query24->execute();
+             $data15 = $query24->fetch(PDO::FETCH_ASSOC);
+ 
+             $query25 = $this->bdd->prepare("SELECT * FROM choix WHERE id_choix = :idChoix");
+             $query25->bindParam(":idChoix", $badAnswerId3);
+             $query25->execute();
+             $data16 = $query25->fetch(PDO::FETCH_ASSOC);
+ 
+             $badAnswer1 = $data14["reponse_choix"];
+             $badAnswer2 = $data15["reponse_choix"];
+             $badAnswer3 = $data16["reponse_choix"];
+ 
+             
+             echo "<input type='radio' name='reponse$i'>";
+             echo "<label> Réponse $i ($goodAnswer) : </label><br>";
+ 
+ 
+             
+             echo "<input type='radio' name='reponse$i' value=''>";
+             echo "<label> Réponse $i-1 ($badAnswer1) : </label><br>";
+ 
+ 
+             
+             echo "<input type='radio' name='reponse$i'>";
+             echo "<label>Réponse $i-2 ($badAnswer2) : </label><br>";
+ 
+             
+             echo "<input type='radio' name='reponse$i'>";
+             echo "<label> Réponse $i-3 ($badAnswer3) : </label><br><br>";
+             $i++;
+         }
+ 
+         echo "<input type='submit' name='submit'>";
+         echo "</form>";
+         
+     }
 }
