@@ -40,7 +40,7 @@ header {
 }
 
 .navlinks li a:hover {
-  color: aquamarine;
+  color: greenyellow;
   font-size: larger;
 }
 
@@ -83,4 +83,12 @@ footer {
 footer p {
   color: #edf0f1;
   padding: 12px;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  background: linear-gradient(#206081, #2a274b, #1c5a72);
 }

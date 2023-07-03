@@ -51,8 +51,6 @@ $pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
   <title>Créer Quizz</title>
 </head>
 
-
-
 <body>
   <?php
   if ($_SESSION["role"] == 0) {
@@ -129,46 +127,14 @@ $pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
         </div>
         <div class="modof modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-          <button type="button" class="btn btn-primary">Understood</button>
         </div>
       </div>
     </div>
   </div><br><br>
 
-  <!-- <div class="divoq divoq1">
-        <form>
-            <div id="field">
-                <label>Title</label>
-                <input type="text" name="title" required=""> <br><br>
-                <label>Question</label><br>
-                <input type="text" name="question n°1" required=""> <br>
-                <label>Reponse</label><br>
-                <input id="rep" type="text" name="text" class="text"  placeholder="entrer une reponse"><br>
-                <input type="radio" name="bad" required="" placeholder="entrer une mauvaise reponse"> <br>
-            </div>
-        </form>
-        <div id="nformu">
-        </div>
-    </div>
-    <div>
-        <div class="controls">
-            <button class="add"  onclick="add()">Ajoute une reponse</button>
-            <button class="remove" onclick="remove()">suppr une reponse</button>
-            <button class="addquest" id="addo" onclick="addquest()">add question</button>   aez²&rté"'()'
-          </div><br><br>
-          <span>autre question</span>
-          <div id="nformi">
-          </div>
-          <div class="controlss">
-            <button class="ajout"  onclick="ajout()">Ajout une question</button>
-            <button class="suppr" onclick="suppr()">suppr les question</button>
-          </div>
-          <p>il y a  : <span id="demo"> </span>  question</p>
-    </div> -->
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 
-  <script src="quiz1.js"></script>
+  <script src="createQuizz.js"></script>
 
   <?php
   require "footer.php";
