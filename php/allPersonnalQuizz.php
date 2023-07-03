@@ -7,6 +7,9 @@ if (empty($_SESSION["id"])) {
 if ($_SESSION["role"] != 1) {
     header("Location: accessDenied.php");
 }
+
+$getPseudo = new Admin();
+$pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
 ?>
 
 <!DOCTYPE html>

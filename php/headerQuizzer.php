@@ -8,5 +8,6 @@
             <li><a href="createQuizz.php">Créer un Quizz</a></li>
         </ul>
     </nav>
+    <span><?php echo "Connecté(e) : " . $pseudo; ?></span>
     <a href="disconnect.php">Déconnexion</a>
 </header>

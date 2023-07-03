@@ -36,6 +36,9 @@ if (isset($_POST["submit"])) {
   echo 'alert("Quizz créé !")';
   echo '</script>';
 }
+
+$getPseudo = new Admin();
+$pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
 ?>
 
 <!DOCTYPE html>

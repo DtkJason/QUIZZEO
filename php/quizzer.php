@@ -1,7 +1,6 @@
 <?php
 require "classes.php";
 
-
 if (empty($_SESSION["id"])) {
     header("Location: login.php");
 }
@@ -16,6 +15,9 @@ if (isset($_GET["score"])) {
     echo 'alert("Score : ' . $score . '")';
     echo '</script>';
 }
+
+$getPseudo = new Admin();
+$pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
 ?>
 
 

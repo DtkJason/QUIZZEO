@@ -15,6 +15,9 @@ if (isset($_GET["score"])) {
     echo 'alert("Score : ' . $score . '")';
     echo '</script>';
 }
+
+$getPseudo = new Admin();
+$pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +26,7 @@ if (isset($_GET["score"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="stylexxx.css">
     <title>Accueil - Administrateur</title>
 </head>
 
@@ -33,7 +36,7 @@ if (isset($_GET["score"])) {
     require "headerAdmin.php";
     ?>
 
-    <h1>Administrateur</h1>
+    <h2>Administrateur</h2>
     <p>Bienvenue sur Quizzeo, le site qui permet de créer des Quizz</p>
 
     <?php

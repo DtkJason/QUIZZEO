@@ -14,6 +14,9 @@ if (!empty($_GET["delete"]) && !empty($_GET["pseudoDelete"])) {
     echo 'alert("Utilisateur supprimé : ' . $pseudoDelete . '")';
     echo '</script>';
 }
+
+$getPseudo = new Admin();
+$pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +25,7 @@ if (!empty($_GET["delete"]) && !empty($_GET["pseudoDelete"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylexxx.css">
     <title>Gérer Membres - Administrateur</title>
 </head>
 

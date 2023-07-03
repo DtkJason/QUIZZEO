@@ -13,6 +13,9 @@ if (!empty($_GET["delete"])) {
     echo 'alert("Quizz supprimé")';
     echo '</script>';
 }
+
+$getPseudo = new Admin();
+$pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
 ?>
 
 <!DOCTYPE html>

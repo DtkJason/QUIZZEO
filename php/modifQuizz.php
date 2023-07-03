@@ -48,6 +48,9 @@ for ($i = 1; $i <= $nbrQuestion; $i++) {
         }
     }
 }
+
+$getPseudo = new Admin();
+$pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
 ?>
 
 <!DOCTYPE html>
