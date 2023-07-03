@@ -1,6 +1,14 @@
 <?php
 require "classes.php";
 
+if (empty($_SESSION["id"])) {
+  header("Location: login.php");
+}
+
+if ($_SESSION["role"] == 2) {
+  header("Location: accessDenied.php");
+}
+
 if (isset($_POST["submit"])) {
   $quizz = new Quizz();
   $newQuizz = $quizz->addQuizz($_POST["title"], $_POST["quizz-difficulty"], $_SESSION["id"]);
@@ -37,34 +45,31 @@ if (isset($_POST["submit"])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-  <link rel="stylesheet" href="../mapingcss/quizz.css">
-  <title>Document</title>
+  <title>Créer Quizz</title>
 </head>
 
 
 
 <body>
   <?php
-  if ($_GET["role"] == 0) {
+  if ($_SESSION["role"] == 0) {
     require "headerAdmin.php";
   }
-  if ($_GET["role"] == 1) {
+  if ($_SESSION["role"] == 1) {
     require "headerQuizzer.php";
   }
   ?>
 
-  <h1>quizz page</h1>
-
-  <h2>Q U I Z Z Z Z Z</h2><br>
+  <h2>Création de votre Quizz</h2><br>
 
   <!-- Button trigger modal -->
 
   <div class="cardo card w-50">
     <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+      <h5 class="card-title">Quizz</h5>
+      <p class="card-text">Créer et personnaliser votre Quizz</p>
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        click to add a quizz
+        Créer
       </button><br>
     </div>
   </div>
@@ -74,14 +79,14 @@ if (isset($_POST["submit"])) {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modoh modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">New Quizz</h1>
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Nouveau Quizz</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modob modal-body">
           <div class="">
             <form method="POST">
               <div id="field">
-                <label>Title</label>
+                <label>Titre</label>
                 <input type="text" name="title" required="">
                 <br>
                 <label>Difficulté du Quizz : </label>
@@ -102,7 +107,7 @@ if (isset($_POST["submit"])) {
               <span>autre question</span> -->
                 <div id="nformi">
                 </div>
-                <input type="submit" name="submit" id="" value="submit"><br>
+                <input type="submit" name="submit" id="" value="Valider"><br>
                 <!-- <input id="demo" type="text" name="demo">1</input> <span id="demo" name="counter"  value= 1 ></span> -->
 
             </form>
@@ -113,14 +118,14 @@ if (isset($_POST["submit"])) {
           <div>
             <br>
             <div class="controlss">
-              <button class="ajout" onclick="ajout()">Ajout une question</button>
-              <button class="suppr" onclick="suppr()">suppr les question</button>
+              <button class="ajout" onclick="ajout()">Ajouter une question</button>
+              <button class="suppr" onclick="suppr()">Supprimer une question</button>
             </div>
 
           </div>
         </div>
         <div class="modof modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
           <button type="button" class="btn btn-primary">Understood</button>
         </div>
       </div>

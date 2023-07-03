@@ -22,7 +22,7 @@ if (!empty($_GET["delete"]) && !empty($_GET["pseudoDelete"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Administrateur</title>
+    <title>Gérer Membres - Administrateur</title>
 </head>
 
 

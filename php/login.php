@@ -7,6 +7,16 @@ if (isset($_GET["reg"])) {
     echo '</script>';
 }
 
+if (isset($_SESSION["id"])) {
+    if ($_SESSION["role"] == 0) {
+        header("Location: admin.php");
+    } elseif ($_SESSION["role"] == 1) {
+        header("Location: quizzer.php");
+    } else {
+        header("Location: user.php");
+    }
+}
+
 
 if (isset($_POST["submit"])) {
     $login = new Authentification();
@@ -14,27 +24,17 @@ if (isset($_POST["submit"])) {
     $_SESSION["id"] = $login->getIdUser();
     $_SESSION["role"] = $login->getRoleUser();
 }
-?> 
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="testo.css" />
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
-<<<<<<< HEAD
 </head>
 
-=======
-  </head>
->>>>>>> 8ea8d13ecf84702bda31b1ffd95abdcaf32c312d
 
 <body>
     <?php
@@ -44,22 +44,18 @@ if (isset($_POST["submit"])) {
     <form method="POST">
         <label for="mail">Email : </label>
         <br>
-        <input type="mail" name="email">
+        <input type="mail" name="email" placeholder="Email" required>
         <br><br>
         <label for="password">Mot de passe : </label>
         <br>
-        <input type="password" name="password">
+        <input type="password" name="password" placeholder="Mot de passe" required>
         <br><br>
-        <input type="submit" name="submit">
+        <input type="submit" name="submit" value="Valider">
     </form>
-<<<<<<< HEAD
 
     <?php
     require "footer.php";
     ?>
-=======
-    <a href="register.php">S'incrire</a>
->>>>>>> 8ea8d13ecf84702bda31b1ffd95abdcaf32c312d
 </body>
 
 </html>

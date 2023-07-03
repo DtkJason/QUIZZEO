@@ -11,8 +11,17 @@ if ($_SESSION["role"] == 2) {
     header("Location: user.php");
 }
 
-$nbrQuestion = $_GET["nbrQuestion"];
-$idQuizz = $_GET["idQuizz"];
+if (isset($_GET["nbrQuestion"])) {
+    $nbrQuestion = $_GET["nbrQuestion"];
+}
+
+if (isset($_GET["idQuizz"])) {
+    $idQuizz = $_GET["idQuizz"];
+}
+
+if (empty($_GET["idQuizz"]) || empty($_GET["nbrQuestion"])) {
+    header("Location: allQuizzAdmin.php");
+}
 
 $modif = new Admin();
 
@@ -39,7 +48,6 @@ for ($i = 1; $i <= $nbrQuestion; $i++) {
         }
     }
 }
-
 ?>
 
 <!DOCTYPE html>

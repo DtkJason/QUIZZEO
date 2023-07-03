@@ -105,7 +105,13 @@ function ajout() {
   rep4n.name = `MRepons3-${indq}`;
   rep4n.placeholder = "entre une mauvaise repponse";
   rep4n.required = true;
-;
+
+  // const repn = document.createElement('input');
+  // repn.type = 'text';
+  // repn.className = `Repons${indq}`;
+  // repn.name = `Repons${indq}`;
+  // repn.placeholder = 'entre un truc';
+  // repn.required = true;
 
   divo.appendChild(br.cloneNode());
   divo.appendChild(qlabel);
@@ -132,7 +138,8 @@ function ajout() {
   nformi.appendChild(divo);
   console.log(indq);
 
-
+  // count++;
+  // document.getElementById('demo').value = count;
 }
 
 function add() {
@@ -162,7 +169,8 @@ function suppr() {
     nformi.removeChild(div_tags[div_tags.length - 1]);
   }
 
-
+  // count--;
+  // document.getElementById('demo').value = count;
 }
 
 const myModal = document.getElementById("myModal");

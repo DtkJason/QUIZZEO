@@ -1,7 +1,10 @@
 <?php
 
 require "classes.php";
-$idQuizz = $_GET["idQuizz"];
+
+if (isset($_GET["idQuizz"])) {
+    $idQuizz = $_GET["idQuizz"];
+}
 
 $quizz = new Admin();
 

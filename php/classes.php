@@ -24,6 +24,7 @@ class Authentification extends ConnectionDB
 {
     public $idUser;
     public $role;
+
     //Fonction qui permet la vérification de l'existence de l'utilisateur saisi, et de son insertion dans le cas contraire
     public function registration($pseudo, $email, $password, $confirmpassword, $role)
     {
@@ -44,12 +45,13 @@ class Authentification extends ConnectionDB
                 //Vérification des mots de passe
                 if ($password == $confirmpassword) {
                     //Requête qui permet d'insérer les informations du nouvel utilisateur
-                    $insertUser = $this->bdd->prepare("INSERT INTO utilisateur(pseudo_utilisateur, email_utilisateur, mdp_utilisateur, role_utilisateur) VALUES (:pseudo, :email, :mdp, :roles)");
-                    $insertUser->bindParam(":pseudo", $pseudo);
-                    $insertUser->bindParam(":email", $email);
-                    $insertUser->bindParam(":mdp", $password);
-                    $insertUser->bindParam(":roles", $role);
-                    $insertUser->execute();
+                    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+                    $query2 = $this->bdd->prepare("INSERT INTO utilisateur(pseudo_utilisateur, email_utilisateur, mdp_utilisateur, role_utilisateur) VALUES (:pseudo, :email, :mdp, :roles)");
+                    $query2->bindParam(":pseudo", $pseudo);
+                    $query2->bindParam(":email", $email);
+                    $query2->bindParam(":mdp", $passwordHash);
+                    $query2->bindParam(":roles", $role);
+                    $query2->execute();
 
                     header("Location: login.php?reg=1");
                 } else {
@@ -65,18 +67,19 @@ class Authentification extends ConnectionDB
             echo '</script>';
         }
     }
+
     //Fonction qui permet la vérification de l'existence de l'utilisateur et de le connecter s'il existe
     public function login($email, $password)
     {
         //Requête qui permet de vérifier si l'email existe dans la base de données
-        $query2 = $this->bdd->prepare("SELECT * FROM utilisateur WHERE email_utilisateur = :email");
-        $query2->bindParam(":email", $email);
-        $query2->execute();
-        $row = $query2->fetch(PDO::FETCH_ASSOC);
+        $query1 = $this->bdd->prepare("SELECT * FROM utilisateur WHERE email_utilisateur = :email");
+        $query1->bindParam(":email", $email);
+        $query1->execute();
+        $row = $query1->fetch(PDO::FETCH_ASSOC);
 
         //Email existant
         if ($row == true) {
-            if ($password == $row["mdp_utilisateur"]) {
+            if (password_verify($password, $row["mdp_utilisateur"]) == true) {
                 $this->idUser = $row["id_utilisateur"];
                 $this->role = $row["role_utilisateur"];
 
@@ -127,24 +130,24 @@ class Quizz extends ConnectionDB
     public function addQuizz($titleQuizz, $difficulteQuizz, $idUserQuizz)
     {
         $dateQuizz = date("Y-m-d");
-        $query3 = $this->bdd->prepare("INSERT INTO quizz(titre_quizz, difficulte_quizz, date_creation_quizz, id_utilisateur) VALUES (:titleQuizz, :difficulteQuizz, :dateQuizz, :idUserQuizz)");
-        $query3->bindParam(":titleQuizz", $titleQuizz);
-        $query3->bindParam(":difficulteQuizz", $difficulteQuizz);
-        $query3->bindParam("dateQuizz", $dateQuizz);
-        $query3->bindParam(":idUserQuizz", $idUserQuizz);
-        $query3->execute();
+        $query1 = $this->bdd->prepare("INSERT INTO quizz(titre_quizz, difficulte_quizz, date_creation_quizz, id_utilisateur) VALUES (:titleQuizz, :difficulteQuizz, :dateQuizz, :idUserQuizz)");
+        $query1->bindParam(":titleQuizz", $titleQuizz);
+        $query1->bindParam(":difficulteQuizz", $difficulteQuizz);
+        $query1->bindParam("dateQuizz", $dateQuizz);
+        $query1->bindParam(":idUserQuizz", $idUserQuizz);
+        $query1->execute();
     }
 
     //Fonction qui permet de récupérer l'ID d'un Quizz
     public function getIdQuizz($titleQuizz, $difficulteQuizz, $idUserQuizz)
     {
-        $query4 = $this->bdd->prepare("SELECT * FROM quizz WHERE titre_quizz = :titleQuizz AND difficulte_quizz = :difficulteQuizz AND id_utilisateur = :idUserQuizz");
-        $query4->bindParam(":titleQuizz", $titleQuizz);
-        $query4->bindParam(":difficulteQuizz", $difficulteQuizz);
-        $query4->bindParam(":idUserQuizz", $idUserQuizz);
-        $query4->execute();
+        $query1 = $this->bdd->prepare("SELECT * FROM quizz WHERE titre_quizz = :titleQuizz AND difficulte_quizz = :difficulteQuizz AND id_utilisateur = :idUserQuizz");
+        $query1->bindParam(":titleQuizz", $titleQuizz);
+        $query1->bindParam(":difficulteQuizz", $difficulteQuizz);
+        $query1->bindParam(":idUserQuizz", $idUserQuizz);
+        $query1->execute();
 
-        $data1 = $query4->fetch(PDO::FETCH_ASSOC);
+        $data1 = $query1->fetch(PDO::FETCH_ASSOC);
 
         $this->idQuizz = $data1["id_quizz"];
         return $this->idQuizz;
@@ -153,9 +156,9 @@ class Quizz extends ConnectionDB
     //Fonction qui permet d'afficher la liste des Quizz
     public function displayAllQuizz()
     {
-        $query13 = $this->bdd->prepare("SELECT * FROM quizz");
-        $query13->execute();
-        $data4 = $query13->fetchAll(PDO::FETCH_ASSOC);
+        $query1 = $this->bdd->prepare("SELECT * FROM quizz");
+        $query1->execute();
+        $data1 = $query1->fetchAll(PDO::FETCH_ASSOC);
 
         echo "<table>";
         echo "<thead>";
@@ -166,14 +169,15 @@ class Quizz extends ConnectionDB
         echo "<td>Créateur</td>";
         echo "</tr>";
         echo "</thead>";
-        foreach ($data4 as $row) {
+        foreach ($data1 as $row) {
             $idUserQuizz = $row["id_utilisateur"];
-            $query14 = $this->bdd->prepare("SELECT * FROM utilisateur WHERE id_utilisateur = :idUser");
-            $query14->bindParam(":idUser", $idUserQuizz);
-            $query14->execute();
-            $data5 = $query14->fetch(PDO::FETCH_ASSOC);
+            $query2 = $this->bdd->prepare("SELECT * FROM utilisateur WHERE id_utilisateur = :idUser");
+            $query2->bindParam(":idUser", $idUserQuizz);
+            $query2->execute();
+            $data2 = $query2->fetch(PDO::FETCH_ASSOC);
 
-            $userPseudo = $data5["pseudo_utilisateur"];
+            $userPseudo = $data2["pseudo_utilisateur"];
+            $idQuizz = $row["id_quizz"];
 
             echo "<tr>";
             echo "<td>" . $row["titre_quizz"] . "</td>";
@@ -186,7 +190,7 @@ class Quizz extends ConnectionDB
             }
             echo "<td>" . $row["date_creation_quizz"] . "</td>";
             echo "<td>" . $userPseudo . "</td>";
-            echo "<td><a href='.php'>Jouer</a></td>";
+            echo "<td><a href='playQuizzDisplay.php?idQuizz=$idQuizz'>Jouer</a></td>";
             echo "</tr>";
         }
         echo "</table>";
@@ -195,15 +199,11 @@ class Quizz extends ConnectionDB
     //Fonction qui permet d'afficher la liste des Quizz en fonction du Quizzer
     public function displayPersonnalQuizz($idUserQuizz)
     {
-        $query15 = $this->bdd->prepare("SELECT * FROM quizz WHERE id_utilisateur = :idUser");
-        $query15->bindParam(":idUser", $idUserQuizz);
-        $query15->execute();
-        $data6 = $query15->fetchAll(PDO::FETCH_ASSOC);
+        $query1 = $this->bdd->prepare("SELECT * FROM quizz WHERE id_utilisateur = :idUser");
+        $query1->bindParam(":idUser", $idUserQuizz);
+        $query1->execute();
+        $data1 = $query1->fetchAll(PDO::FETCH_ASSOC);
 
-        $query30 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
-        $query30->bindParam(":idQuizz", $idQuizz);
-        $query30->execute();
-        $data18 = $query30->fetchAll(PDO::FETCH_ASSOC);
 
         echo "<table>";
         echo "<thead>";
@@ -213,7 +213,7 @@ class Quizz extends ConnectionDB
         echo "<td>Date de création</td>";
         echo "</tr>";
         echo "</thead>";
-        foreach ($data6 as $row) {
+        foreach ($data1 as $row) {
             echo "<tr>";
             echo "<td>" . $row["titre_quizz"] . "</td>";
             if ($row["difficulte_quizz"] == 1) {
@@ -227,10 +227,134 @@ class Quizz extends ConnectionDB
             $idQuizz = $row["id_quizz"];
 
             echo "<td>" . $row["date_creation_quizz"] . "</td>";
-            echo "<td><a href='playQuizDisplay.php?idQuizz=$idQuizz'>Afficher-jouer</a></td>";
+            echo "<td><a href='playQuizzDisplay.php?idQuizz=$idQuizz'>Jouer</a></td>";
             echo "<td><a href='modifQuizzQuizzer.php?idQuizz=$idQuizz&idUser=$idUserQuizz'>Modifier</a></td>";
             echo "<td><a href='deleteQuizz.php?idQuizz=$idQuizz'>Supprimer</a></td>";
             echo "</tr>";
+        }
+    }
+
+    public function displayQuizzForm($idQuizz)
+    {
+        $query1 = $this->bdd->prepare("SELECT * FROM quizz WHERE id_quizz = :idQuizz");
+        $query1->bindParam("idQuizz", $idQuizz);
+        $query1->execute();
+        $data1 = $query1->fetch(PDO::FETCH_ASSOC);
+
+        $titreQuizz = $data1["titre_quizz"];
+
+        $query2 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
+        $query2->bindParam("idQuizz", $idQuizz);
+        $query2->execute();
+        $data2 = $query2->fetchAll(PDO::FETCH_ASSOC);
+
+        echo "<h1>$titreQuizz</h1>";
+        echo "<form method='POST'>";
+
+        $i = 1;
+
+        foreach ($data2 as $row) {
+            $idQuestion = $row["id_question"];
+            $query3 = $this->bdd->prepare("SELECT * FROM question WHERE id_question = :idQuestion");
+            $query3->bindParam(":idQuestion", $idQuestion);
+            $query3->execute();
+            $data3 = $query3->fetch(PDO::FETCH_ASSOC);
+
+            $intituleQuestion = $data3['intitule_question'];
+            $idQuestion = $data3["id_question"];
+
+            echo "<p>Question $i : $intituleQuestion  </p><br>";
+
+            $bool = true;
+
+            $query4 = $this->bdd->prepare("SELECT * FROM choix WHERE id_question = :idQuestion AND bonneReponse_choix = :goodAnswer");
+            $query4->bindParam(":idQuestion", $idQuestion);
+            $query4->bindParam(":goodAnswer", $bool);
+            $query4->execute();
+            $data4 = $query4->fetch(PDO::FETCH_ASSOC);
+
+            $goodAnswer = $data4["reponse_choix"];
+            $goodAnswerId = $data4["id_choix"];
+
+            $badAnswerId1 = $goodAnswerId + 1;
+            $badAnswerId2 = $goodAnswerId + 2;
+            $badAnswerId3 = $goodAnswerId + 3;
+
+            $query5 = $this->bdd->prepare("SELECT * FROM choix WHERE id_choix = :idChoix");
+            $query5->bindParam(":idChoix", $badAnswerId1);
+            $query5->execute();
+            $data5 = $query5->fetch(PDO::FETCH_ASSOC);
+
+            $query6 = $this->bdd->prepare("SELECT * FROM choix WHERE id_choix = :idChoix");
+            $query6->bindParam(":idChoix", $badAnswerId2);
+            $query6->execute();
+            $data6 = $query6->fetch(PDO::FETCH_ASSOC);
+
+            $query7 = $this->bdd->prepare("SELECT * FROM choix WHERE id_choix = :idChoix");
+            $query7->bindParam(":idChoix", $badAnswerId3);
+            $query7->execute();
+            $data7 = $query7->fetch(PDO::FETCH_ASSOC);
+
+            $badAnswer1 = $data5["reponse_choix"];
+            $badAnswer2 = $data6["reponse_choix"];
+            $badAnswer3 = $data7["reponse_choix"];
+
+            $tab = array(
+                $goodAnswer,
+                $badAnswer1,
+                $badAnswer2,
+                $badAnswer3
+            );
+
+            $keys = array_keys($tab);
+            shuffle($keys);
+
+            $answer1 = $tab[$keys[0]];
+            $answer2 = $tab[$keys[1]];
+            $answer3 = $tab[$keys[2]];
+            $answer4 = $tab[$keys[3]];
+
+            echo "<input type='radio' name='reponse$i' value='$answer1'>";
+            echo "<label> Réponse $i ($answer1) : </label><br>";
+
+            echo "<input type='radio' name='reponse$i' value='$answer2'>";
+            echo "<label> Réponse $i-1 ($answer2) : </label><br>";
+
+            echo "<input type='radio' name='reponse$i' value='$answer3'>";
+            echo "<label>Réponse $i-2 ($answer3) : </label><br>";
+
+            echo "<input type='radio' name='reponse$i' value='$answer4'>";
+            echo "<label> Réponse $i-3 ($answer4) : </label><br><br>";
+            $i++;
+        }
+        echo "<input type='submit' name='submit'>";
+        echo "</form>";
+    }
+
+    //Fonction qui permet de récupérer le score
+    public function recupLastScore($idUser)
+    {
+        $query1 = $this->bdd->prepare("SELECT * FROM utilisateur_quizz WHERE id_utilisateur = :idUser");
+        $query1->bindParam(":idUser", $idUser);
+        $query1->execute();
+        $data1 = $query1->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($data1 as $row) {
+            $score = $row["score"];
+            $idQuizz = $row["id_quizz"];
+        }
+
+        $query2 = $this->bdd->prepare("SELECT * FROM quizz WHERE id_quizz = :idQuizz");
+        $query2->bindParam(":idQuizz", $idQuizz);
+        $query2->execute();
+        $data2 = $query2->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($data2 as $row) {
+            $nomQuizz = $row["titre_quizz"];
+        }
+
+        if (isset($nomQuizz)) {
+            echo "<p>Votre dernière partie -> $nomQuizz | Score : $score</p>";
         }
     }
 }
@@ -247,34 +371,34 @@ class Question extends ConnectionDB
     public function addQuestion($intituleQuestion, $difficulteQuestion)
     {
         $dateQuestion = date("Y-m-d");
-        $query5 = $this->bdd->prepare("INSERT INTO question(intitule_question, difficulte_question, date_creation_question) VALUES (:intituleQuestion, :difficulteQuestion, :dateQuestion)");
-        $query5->bindParam(":intituleQuestion", $intituleQuestion);
-        $query5->bindParam(":difficulteQuestion", $difficulteQuestion);
-        $query5->bindParam(":dateQuestion", $dateQuestion);
-        $query5->execute();
+        $query1 = $this->bdd->prepare("INSERT INTO question(intitule_question, difficulte_question, date_creation_question) VALUES (:intituleQuestion, :difficulteQuestion, :dateQuestion)");
+        $query1->bindParam(":intituleQuestion", $intituleQuestion);
+        $query1->bindParam(":difficulteQuestion", $difficulteQuestion);
+        $query1->bindParam(":dateQuestion", $dateQuestion);
+        $query1->execute();
     }
 
     //Fonction qui permet de récupérer l'ID d'une Question
     public function getIdQuestion($intituleQuestion, $difficulteQuestion)
     {
-        $query6 = $this->bdd->prepare("SELECT * FROM question WHERE intitule_question = :intituleQuestion AND difficulte_question = :difficulteQuestion");
-        $query6->bindParam(":intituleQuestion", $intituleQuestion);
-        $query6->bindParam(":difficulteQuestion", $difficulteQuestion);
-        $query6->execute();
+        $query1 = $this->bdd->prepare("SELECT * FROM question WHERE intitule_question = :intituleQuestion AND difficulte_question = :difficulteQuestion");
+        $query1->bindParam(":intituleQuestion", $intituleQuestion);
+        $query1->bindParam(":difficulteQuestion", $difficulteQuestion);
+        $query1->execute();
 
-        $data2 = $query6->fetch(PDO::FETCH_ASSOC);
+        $data1 = $query1->fetch(PDO::FETCH_ASSOC);
 
-        $this->idQuestion = $data2["id_question"];
+        $this->idQuestion = $data1["id_question"];
         return $this->idQuestion;
     }
 
     //Fonction qui permet d'associer un Quizz à une Question dans la base de données
     public function addQuizzQuestion($idQuizz, $idQuestion)
     {
-        $query7 = $this->bdd->prepare("INSERT INTO quizz_question(id_quizz, id_question) VALUES (:idQuizz, :idQuestion)");
-        $query7->bindParam(":idQuizz", $idQuizz);
-        $query7->bindParam(":idQuestion", $idQuestion);
-        $query7->execute();
+        $query1 = $this->bdd->prepare("INSERT INTO quizz_question(id_quizz, id_question) VALUES (:idQuizz, :idQuestion)");
+        $query1->bindParam(":idQuizz", $idQuizz);
+        $query1->bindParam(":idQuestion", $idQuestion);
+        $query1->execute();
     }
 }
 
@@ -289,11 +413,40 @@ class Choix extends ConnectionDB
     //Fonction qui permet d'insérer les informations d'un Choix dans la base de données
     public function addChoice($reponseChoix, $bonneReponse, $idQuestion)
     {
-        $query8 = $this->bdd->prepare("INSERT INTO choix(reponse_choix, bonneReponse_choix, id_question) VALUES (:reponseChoix, :bonneReponse, :idQuestion)");
-        $query8->bindParam(":reponseChoix", $reponseChoix);
-        $query8->bindParam(":bonneReponse", $bonneReponse);
-        $query8->bindParam(":idQuestion", $idQuestion);
-        $query8->execute();
+        $query1 = $this->bdd->prepare("INSERT INTO choix(reponse_choix, bonneReponse_choix, id_question) VALUES (:reponseChoix, :bonneReponse, :idQuestion)");
+        $query1->bindParam(":reponseChoix", $reponseChoix);
+        $query1->bindParam(":bonneReponse", $bonneReponse);
+        $query1->bindParam(":idQuestion", $idQuestion);
+        $query1->execute();
+    }
+
+    //Fonction qui permet de récupérer la bonne réponse d'une Question
+    public function getGoodAnswer($idQuizz, $i)
+    {
+        $query1 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
+        $query1->bindParam(":idQuizz", $idQuizz);
+        $query1->execute();
+        $data1 = $query1->fetchAll(PDO::FETCH_ASSOC);
+
+        $j = 1;
+        foreach ($data1 as $row) {
+            ${"idQuestion" . $j} = $row["id_question"];
+            $array[] = ${"idQuestion" . $j};
+        }
+
+        $questionPos = $i - 1;
+        $bool = true;
+
+        $query2 = $this->bdd->prepare("SELECT * FROM choix WHERE id_question = :idQuestion AND bonneReponse_choix = :bool");
+        $query2->bindParam(":idQuestion", $array[$questionPos]);
+        $query2->bindParam(":bool", $bool);
+        $query2->execute();
+        $data2 = $query2->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($data2 as $row) {
+            $goodAnswer = $row["reponse_choix"];
+        }
+        return $goodAnswer;
     }
 }
 
@@ -307,11 +460,11 @@ class Admin extends ConnectionDB
     public function displayUsers()
     {
         //Requête qui permet de sélectionner tous les utilisateurs dans la table utilisateur
-        $query9 = $this->bdd->prepare("SELECT * FROM utilisateur");
-        $query9->execute();
+        $query1 = $this->bdd->prepare("SELECT * FROM utilisateur");
+        $query1->execute();
 
         //Stockage des informations récupérées dans un tableau associatif
-        $data3 = $query9->fetchAll(PDO::FETCH_ASSOC);
+        $data1 = $query1->fetchAll(PDO::FETCH_ASSOC);
 
         echo "<table>";
         echo "<thead>";
@@ -319,13 +472,12 @@ class Admin extends ConnectionDB
         echo "<td>ID</td>";
         echo "<td>Pseudo</td>";
         echo "<td>Email</td>";
-        echo "<td>Mot de passe</td>";
         echo "<td>Type de compte</td>";
         echo "</tr>";
         echo "</thead>";
 
         //Boucle qui permet l'affichage de chaque utilisateur
-        foreach ($data3 as $row) {
+        foreach ($data1 as $row) {
             if ($row["role_utilisateur"] != 0) {
                 $idUser = $row["id_utilisateur"];
                 $pseudoUser = $row["pseudo_utilisateur"];
@@ -334,7 +486,6 @@ class Admin extends ConnectionDB
                 echo "<td>" . $idUser . "</td>";
                 echo "<td>" . $pseudoUser . "</td>";
                 echo "<td>" . $row["email_utilisateur"] . "</td>";
-                echo "<td>" . $row["mdp_utilisateur"] . "</td>";
                 if ($row["role_utilisateur"] == 1) {
                     echo "<td>Quizzer</td>";
                 } else {
@@ -354,10 +505,10 @@ class Admin extends ConnectionDB
         if (isset($idUser) && !empty($idUser)) {
             $newId = 1;
             //Requête qui permet de mettre à jour le propriétaire d'un quizz en modifiant l'id associé
-            $modifyIdUserQuizz = $this->bdd->prepare("UPDATE quizz SET id_utilisateur = :newId WHERE id_utilisateur = :idUser");
-            $modifyIdUserQuizz->bindParam(":newId", $newId);
-            $modifyIdUserQuizz->bindParam(":idUser", $idUser);
-            $modifyIdUserQuizz->execute();
+            $query1 = $this->bdd->prepare("UPDATE quizz SET id_utilisateur = :newId WHERE id_utilisateur = :idUser");
+            $query1->bindParam(":newId", $newId);
+            $query1->bindParam(":idUser", $idUser);
+            $query1->execute();
         } else {
             echo "Erreur ID";
         }
@@ -367,16 +518,16 @@ class Admin extends ConnectionDB
     public function deleteMember($idUser)
     {
         //Requête qui permet de vérifier si l'utilisateur choisi existe dans la base de données
-        $recupUser = $this->bdd->prepare("SELECT * FROM utilisateur WHERE id_utilisateur = :idUser");
-        $recupUser->bindParam(":idUser", $idUser);
-        $recupUser->execute();
+        $query1 = $this->bdd->prepare("SELECT * FROM utilisateur WHERE id_utilisateur = :idUser");
+        $query1->bindParam(":idUser", $idUser);
+        $query1->execute();
 
         //Si l'utilisateur existe
-        if ($recupUser->rowCount() > 0) {
+        if ($query1->rowCount() > 0) {
             //Requête qui permet de supprimer l'utilisateur choisi
-            $deleteUser = $this->bdd->prepare("DELETE FROM utilisateur WHERE id_utilisateur = :idUser");
-            $deleteUser->bindParam(":idUser", $idUser);
-            $deleteUser->execute();
+            $query2 = $this->bdd->prepare("DELETE FROM utilisateur WHERE id_utilisateur = :idUser");
+            $query2->bindParam(":idUser", $idUser);
+            $query2->execute();
 
             header("Location: adminPage.php");
         } else {
@@ -385,14 +536,15 @@ class Admin extends ConnectionDB
         }
     }
 
+    //Fonction qui permet de récupérer l'ID d'un utilisateur
     public function getUserPseudo($idUser)
     {
-        $query = $this->bdd->prepare("SELECT * FROM utilisateur WHERE id_utilisateur = :idUser");
-        $query->bindParam(":idUser", $idUser);
-        $query->execute();
-        $data = $query->fetch(PDO::FETCH_ASSOC);
+        $query1 = $this->bdd->prepare("SELECT * FROM utilisateur WHERE id_utilisateur = :idUser");
+        $query1->bindParam(":idUser", $idUser);
+        $query1->execute();
+        $data1 = $query1->fetch(PDO::FETCH_ASSOC);
 
-        $pseudoUser = $data["pseudo_utilisateur"];
+        $pseudoUser = $data1["pseudo_utilisateur"];
         return $pseudoUser;
     }
 
@@ -404,9 +556,9 @@ class Admin extends ConnectionDB
             //Vérification des mots de passe
             if ($newPass == $confirmPass) {
                 //Requête qui permet de modifier le mot de passe de l'utilisateur choisi
-                $query10 = $this->bdd->prepare("UPDATE utilisateur SET mdp_utilisateur = :newpassword WHERE id_utilisateur = $idUser");
-                $query10->bindParam(":newpassword", $newPass);
-                $query10->execute();
+                $query1 = $this->bdd->prepare("UPDATE utilisateur SET mdp_utilisateur = :newpassword WHERE id_utilisateur = $idUser");
+                $query1->bindParam(":newpassword", $newPass);
+                $query1->execute();
                 echo '<script type="text/javascript">';
                 echo 'alert("Mot de passe modifié")';
                 echo '</script>';
@@ -425,9 +577,9 @@ class Admin extends ConnectionDB
     {
         if (isset($newpseudo)) {
             //Requête qui permet de modifier le pseudo de l'utilisateur choisi
-            $query11 = $this->bdd->prepare("UPDATE utilisateur SET pseudo_utilisateur = :newpseudo WHERE id_utilisateur = $idUser");
-            $query11->bindParam(":newpseudo", $newpseudo);
-            $query11->execute();
+            $query1 = $this->bdd->prepare("UPDATE utilisateur SET pseudo_utilisateur = :newpseudo WHERE id_utilisateur = $idUser");
+            $query1->bindParam(":newpseudo", $newpseudo);
+            $query1->execute();
             echo '<script type="text/javascript">';
             echo 'alert("Pseudo modifié")';
             echo '</script>';
@@ -442,9 +594,9 @@ class Admin extends ConnectionDB
     {
         if (isset($newemail)) {
             //Requête qui permet de modifier l'email de l'utilisateur choisi
-            $query12 = $this->bdd->prepare("UPDATE utilisateur SET email_utilisateur = :newemail WHERE id_utilisateur = $idUser");
-            $query12->bindParam(":newemail", $newemail);
-            $query12->execute();
+            $query1 = $this->bdd->prepare("UPDATE utilisateur SET email_utilisateur = :newemail WHERE id_utilisateur = $idUser");
+            $query1->bindParam(":newemail", $newemail);
+            $query1->execute();
             echo '<script type="text/javascript">';
             echo 'alert("Email modifié")';
             echo '</script>';
@@ -454,11 +606,12 @@ class Admin extends ConnectionDB
         }
     }
 
+    //Fonction qui permet d'afficher la liste de Quizz pour les administrateurs avec les boutons modifier/supprimer
     public function listQuizzAdmin()
     {
-        $query16 = $this->bdd->prepare("SELECT * FROM quizz");
-        $query16->execute();
-        $data7 = $query16->fetchAll(PDO::FETCH_ASSOC);
+        $query1 = $this->bdd->prepare("SELECT * FROM quizz");
+        $query1->execute();
+        $data1 = $query1->fetchAll(PDO::FETCH_ASSOC);
 
         echo "<table>";
         echo "<thead>";
@@ -469,29 +622,29 @@ class Admin extends ConnectionDB
         echo "<td>Créateur</td>";
         echo "</tr>";
         echo "</thead>";
-        foreach ($data7 as $row) {
+        foreach ($data1 as $row) {
             $idUserQuizz = $row["id_utilisateur"];
-            $query17 = $this->bdd->prepare("SELECT * FROM utilisateur WHERE id_utilisateur = :idUser");
-            $query17->bindParam(":idUser", $idUserQuizz);
-            $query17->execute();
-            $data8 = $query17->fetch(PDO::FETCH_ASSOC);
+            $query2 = $this->bdd->prepare("SELECT * FROM utilisateur WHERE id_utilisateur = :idUser");
+            $query2->bindParam(":idUser", $idUserQuizz);
+            $query2->execute();
+            $data2 = $query2->fetch(PDO::FETCH_ASSOC);
 
-            $userPseudo = $data8["pseudo_utilisateur"];
+            $userPseudo = $data2["pseudo_utilisateur"];
 
-            $query18 = $this->bdd->prepare("SELECT * FROM quizz WHERE id_utilisateur = :idUser AND titre_quizz = :titreQuizz");
-            $query18->bindParam(":idUser", $idUserQuizz);
-            $query18->bindParam(":titreQuizz", $row["titre_quizz"]);
-            $query18->execute();
-            $data9 = $query18->fetch(PDO::FETCH_ASSOC);
+            $query3 = $this->bdd->prepare("SELECT * FROM quizz WHERE id_utilisateur = :idUser AND titre_quizz = :titreQuizz");
+            $query3->bindParam(":idUser", $idUserQuizz);
+            $query3->bindParam(":titreQuizz", $row["titre_quizz"]);
+            $query3->execute();
+            $data3 = $query3->fetch(PDO::FETCH_ASSOC);
 
-            $idQuizz = $data9["id_quizz"];
+            $idQuizz = $data3["id_quizz"];
 
-            $query30 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
-            $query30->bindParam(":idQuizz", $idQuizz);
-            $query30->execute();
-            $data18 = $query30->fetchAll(PDO::FETCH_ASSOC);
+            $query4 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
+            $query4->bindParam(":idQuizz", $idQuizz);
+            $query4->execute();
+            $data4 = $query4->fetchAll(PDO::FETCH_ASSOC);
 
-            $nbrQuestion = count($data18);
+            $nbrQuestion = count($data4);
 
             echo "<tr>";
             echo "<td>" . $row["titre_quizz"] . "</td>";
@@ -504,7 +657,7 @@ class Admin extends ConnectionDB
             }
             echo "<td>" . $row["date_creation_quizz"] . "</td>";
             echo "<td>" . $userPseudo . "</td>";
-            echo "<td><a href='playQuizDisplay.php?idQuizz=$idQuizz'>Afficher-jouer</a></td>";
+            echo "<td><a href='playQuizzDisplay.php?idQuizz=$idQuizz'>Jouer</a></td>";
             echo "<td><a href='modifQuizz.php?idQuizz=$idQuizz&nbrQuestion=$nbrQuestion'>Modifier</a></td>";
             echo "<td><a href='deleteQuizz.php?idQuizz=$idQuizz'>Supprimer</a></td>";
             echo "</tr>";
@@ -512,32 +665,33 @@ class Admin extends ConnectionDB
         echo "</table>";
     }
 
+    //Fonction qui permet de créer le formulaire qui va permettre de modifier un Quizz
     public function editQuizzForm($idQuizz)
     {
-        $query19 = $this->bdd->prepare("SELECT * FROM quizz WHERE id_quizz = :idQuizz");
-        $query19->bindParam("idQuizz", $idQuizz);
-        $query19->execute();
-        $data10 = $query19->fetch(PDO::FETCH_ASSOC);
+        $query1 = $this->bdd->prepare("SELECT * FROM quizz WHERE id_quizz = :idQuizz");
+        $query1->bindParam("idQuizz", $idQuizz);
+        $query1->execute();
+        $data1 = $query1->fetch(PDO::FETCH_ASSOC);
 
-        $titreQuizz = $data10["titre_quizz"];
+        $titreQuizz = $data1["titre_quizz"];
 
-        if ($data10["difficulte_quizz"] == 1) {
+        if ($data1["difficulte_quizz"] == 1) {
             $diffQuizz = "Facile";
-        } elseif ($data10["difficulte_quizz"] == 2) {
+        } elseif ($data1["difficulte_quizz"] == 2) {
             $diffQuizz = "Intermédiaire";
         } else {
             $diffQuizz = "Difficile";
         }
 
-        $query20 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
-        $query20->bindParam("idQuizz", $idQuizz);
-        $query20->execute();
-        $data11 = $query20->fetchAll(PDO::FETCH_ASSOC);
+        $query2 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
+        $query2->bindParam("idQuizz", $idQuizz);
+        $query2->execute();
+        $data2 = $query2->fetchAll(PDO::FETCH_ASSOC);
 
         echo "<h1>Modifier Quizz</h1>";
         echo "<form method='POST'>";
         echo "<label>Modifier Nom Quizz ($titreQuizz) : </label><br>";
-        echo "<input type='text' name='nomQuizz'><br><br>";
+        echo "<input type='text' name='nomQuizz' placeholder='Nouveau nom'><br><br>";
         echo "<label>Modifier Difficulté Quizz ($diffQuizz) : </label><br>";
         echo "<select name='diffQuizz'>";
         echo "<option value=''></option>";
@@ -547,27 +701,27 @@ class Admin extends ConnectionDB
         echo "</select><br><br><br>";
 
         $i = 1;
-        echo"<div id='nformi'>";
-        foreach ($data11 as $row) {
+
+        foreach ($data2 as $row) {
             $idQuestion = $row["id_question"];
-            $query21 = $this->bdd->prepare("SELECT * FROM question WHERE id_question = :idQuestion");
-            $query21->bindParam(":idQuestion", $idQuestion);
-            $query21->execute();
-            $data12 = $query21->fetch(PDO::FETCH_ASSOC);
+            $query3 = $this->bdd->prepare("SELECT * FROM question WHERE id_question = :idQuestion");
+            $query3->bindParam(":idQuestion", $idQuestion);
+            $query3->execute();
+            $data3 = $query3->fetch(PDO::FETCH_ASSOC);
 
-            $intituleQuestion = $data12['intitule_question'];
-            $idQuestion = $data12["id_question"];
+            $intituleQuestion = $data3['intitule_question'];
+            $idQuestion = $data3["id_question"];
 
-            if ($data12["difficulte_question"] == 1) {
+            if ($data3["difficulte_question"] == 1) {
                 $diffQuestion = "Facile";
-            } elseif ($data12["difficulte_question"] == 2) {
+            } elseif ($data3["difficulte_question"] == 2) {
                 $diffQuestion = "Intermédiaire";
             } else {
                 $diffQuestion = "Difficile";
             }
-            echo"<div class='divoq divoq$i'>";
+
             echo "<label>Modifier Question $i ($intituleQuestion) : </label><br>";
-            echo "<input type='text' name='question$i'><br><br>";
+            echo "<input type='text' name='question$i' placeholder='Nouvelle question'><br><br>";
 
             echo "<label>Modifier Difficulté Question $i ($diffQuestion) : </label><br>";
             echo "<select name='diffQuestion$i'>";
@@ -579,281 +733,194 @@ class Admin extends ConnectionDB
 
             $bool = true;
 
-            $query22 = $this->bdd->prepare("SELECT * FROM choix WHERE id_question = :idQuestion AND bonneReponse_choix = :goodAnswer");
-            $query22->bindParam(":idQuestion", $idQuestion);
-            $query22->bindParam(":goodAnswer", $bool);
-            $query22->execute();
-            $data13 = $query22->fetch(PDO::FETCH_ASSOC);
+            $query4 = $this->bdd->prepare("SELECT * FROM choix WHERE id_question = :idQuestion AND bonneReponse_choix = :goodAnswer");
+            $query4->bindParam(":idQuestion", $idQuestion);
+            $query4->bindParam(":goodAnswer", $bool);
+            $query4->execute();
+            $data4 = $query4->fetch(PDO::FETCH_ASSOC);
 
-            $goodAnswer = $data13["reponse_choix"];
-            $goodAnswerId = $data13["id_choix"];
+            $goodAnswer = $data4["reponse_choix"];
+            $goodAnswerId = $data4["id_choix"];
 
             $badAnswerId1 = $goodAnswerId + 1;
             $badAnswerId2 = $goodAnswerId + 2;
             $badAnswerId3 = $goodAnswerId + 3;
 
-            $query23 = $this->bdd->prepare("SELECT * FROM choix WHERE id_choix = :idChoix");
-            $query23->bindParam(":idChoix", $badAnswerId1);
-            $query23->execute();
-            $data14 = $query23->fetch(PDO::FETCH_ASSOC);
+            $query5 = $this->bdd->prepare("SELECT * FROM choix WHERE id_choix = :idChoix");
+            $query5->bindParam(":idChoix", $badAnswerId1);
+            $query5->execute();
+            $data5 = $query5->fetch(PDO::FETCH_ASSOC);
 
-            $query24 = $this->bdd->prepare("SELECT * FROM choix WHERE id_choix = :idChoix");
-            $query24->bindParam(":idChoix", $badAnswerId2);
-            $query24->execute();
-            $data15 = $query24->fetch(PDO::FETCH_ASSOC);
+            $query6 = $this->bdd->prepare("SELECT * FROM choix WHERE id_choix = :idChoix");
+            $query6->bindParam(":idChoix", $badAnswerId2);
+            $query6->execute();
+            $data6 = $query6->fetch(PDO::FETCH_ASSOC);
 
-            $query25 = $this->bdd->prepare("SELECT * FROM choix WHERE id_choix = :idChoix");
-            $query25->bindParam(":idChoix", $badAnswerId3);
-            $query25->execute();
-            $data16 = $query25->fetch(PDO::FETCH_ASSOC);
+            $query7 = $this->bdd->prepare("SELECT * FROM choix WHERE id_choix = :idChoix");
+            $query7->bindParam(":idChoix", $badAnswerId3);
+            $query7->execute();
+            $data7 = $query7->fetch(PDO::FETCH_ASSOC);
 
-            $badAnswer1 = $data14["reponse_choix"];
-            $badAnswer2 = $data15["reponse_choix"];
-            $badAnswer3 = $data16["reponse_choix"];
+            $badAnswer1 = $data5["reponse_choix"];
+            $badAnswer2 = $data6["reponse_choix"];
+            $badAnswer3 = $data7["reponse_choix"];
 
             echo "<label>Modifier Bonne Réponse $i ($goodAnswer) : </label><br>";
-            echo "<input type='text' name='bonnereponse$i'><br><br>";
+            echo "<input type='text' name='bonnereponse$i' placeholder='Nouvelle réponse'><br><br>";
 
 
             echo "<label>Modifier Mauvaise Réponse $i-1 ($badAnswer1) : </label><br>";
-            echo "<input type='text' name='mauvaisereponse$i-1'><br><br>";
+            echo "<input type='text' name='mauvaisereponse$i-1' placeholder='Nouvelle réponse'><br><br>";
 
 
             echo "<label>Modifier Mauvaise Réponse $i-2 ($badAnswer2) : </label><br>";
-            echo "<input type='text' name='mauvaisereponse$i-2'><br><br>";
+            echo "<input type='text' name='mauvaisereponse$i-2' placeholder='Nouvelle réponse'><br><br>";
 
             echo "<label>Modifier Mauvaise Réponse $i-3 ($badAnswer3) : </label><br>";
-            echo "<input type='text' name='mauvaisereponse$i-3'><br><br><br>";
+            echo "<input type='text' name='mauvaisereponse$i-3' placeholder='Nouvelle réponse'><br><br><br>";
             $i++;
-            echo"</div>";
         }
-        echo"</div>";
 
         echo "<input type='submit' name='submit'>";
-        echo "</form><br><br>";
-        echo"<div class='controlss'>";
-        echo"<button class='ajout'  onclick='ajout()'>Ajout une question</button>";
-        echo"<button class='suppr' onclick='suppr()'>suppr les question</button>";
-        echo"</div>";        
-
+        echo "</form>";
     }
 
+    //Fonction qui permet de modifier le nom d'un Quizz
     public function editQuizzName($idQuizz, $newTitreQuizz)
     {
-        $query26 = $this->bdd->prepare("UPDATE quizz SET titre_quizz = :newTitle WHERE id_quizz = :idQuizz");
-        $query26->bindParam(":newTitle", $newTitreQuizz);
-        $query26->bindParam(":idQuizz", $idQuizz);
-        $query26->execute();
+        $query1 = $this->bdd->prepare("UPDATE quizz SET titre_quizz = :newTitle WHERE id_quizz = :idQuizz");
+        $query1->bindParam(":newTitle", $newTitreQuizz);
+        $query1->bindParam(":idQuizz", $idQuizz);
+        $query1->execute();
     }
 
+    //Fonction qui permet de modifier la difficulté d'un Quizz
     public function editQuizzDiff($idQuizz, $newDiffQuizz)
     {
-        $query27 = $this->bdd->prepare("UPDATE quizz SET difficulte_quizz = :newDiffQuizz WHERE id_quizz = :idQuizz");
-        $query27->bindParam(":newDiffQuizz", $newDiffQuizz);
-        $query27->bindParam(":idQuizz", $idQuizz);
-        $query27->execute();
+        $query1 = $this->bdd->prepare("UPDATE quizz SET difficulte_quizz = :newDiffQuizz WHERE id_quizz = :idQuizz");
+        $query1->bindParam(":newDiffQuizz", $newDiffQuizz);
+        $query1->bindParam(":idQuizz", $idQuizz);
+        $query1->execute();
     }
 
+    //Fonction qui permet de modifier le nom d'une Question
     public function editQuestionName($idQuizz, $newQuestionName, $a)
     {
-        $query28 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
-        $query28->bindParam(":idQuizz", $idQuizz);
-        $query28->execute();
-        $data17 = $query28->fetchAll(PDO::FETCH_ASSOC);
+        $query1 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
+        $query1->bindParam(":idQuizz", $idQuizz);
+        $query1->execute();
+        $data1 = $query1->fetchAll(PDO::FETCH_ASSOC);
 
         $position = $a - 1;
-        $idQuestion = $data17[$position]["id_question"];
+        $idQuestion = $data1[$position]["id_question"];
 
-        $query29 = $this->bdd->prepare("UPDATE question SET intitule_question = :newQuestionName WHERE id_question = :idQuestion");
-        $query29->bindParam(":newQuestionName", $newQuestionName);
-        $query29->bindParam(":idQuestion", $idQuestion);
-        $query29->execute();
+        $query2 = $this->bdd->prepare("UPDATE question SET intitule_question = :newQuestionName WHERE id_question = :idQuestion");
+        $query2->bindParam(":newQuestionName", $newQuestionName);
+        $query2->bindParam(":idQuestion", $idQuestion);
+        $query2->execute();
     }
 
+    //Fonction qui permet de modifier la difficulté d'une Question
     public function editQuestionDiff($idQuizz, $newQuestionDiff, $a)
     {
-        $query31 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
-        $query31->bindParam(":idQuizz", $idQuizz);
-        $query31->execute();
-        $data18 = $query31->fetchAll(PDO::FETCH_ASSOC);
+        $query1 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
+        $query1->bindParam(":idQuizz", $idQuizz);
+        $query1->execute();
+        $data1 = $query1->fetchAll(PDO::FETCH_ASSOC);
 
         $position = $a - 1;
-        $idQuestion = $data18[$position]["id_question"];
+        $idQuestion = $data1[$position]["id_question"];
 
-        $query32 = $this->bdd->prepare("UPDATE question SET difficulte_question = :newQuestionDiff WHERE id_question = :idQuestion");
-        $query32->bindParam(":newQuestionDiff", $newQuestionDiff);
-        $query32->bindParam(":idQuestion", $idQuestion);
-        $query32->execute();
+        $query2 = $this->bdd->prepare("UPDATE question SET difficulte_question = :newQuestionDiff WHERE id_question = :idQuestion");
+        $query2->bindParam(":newQuestionDiff", $newQuestionDiff);
+        $query2->bindParam(":idQuestion", $idQuestion);
+        $query2->execute();
     }
 
+    //Fonction qui permet de modifier une bonne réponse
     public function editGoodAnswer($idQuizz, $newGoodAnswer, $a)
     {
-        $query33 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
-        $query33->bindParam(":idQuizz", $idQuizz);
-        $query33->execute();
-        $data19 = $query33->fetchAll(PDO::FETCH_ASSOC);
+        $query1 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
+        $query1->bindParam(":idQuizz", $idQuizz);
+        $query1->execute();
+        $data1 = $query1->fetchAll(PDO::FETCH_ASSOC);
 
         $position = $a - 1;
-        $idQuestion = $data19[$position]["id_question"];
+        $idQuestion = $data1[$position]["id_question"];
 
         $bool = true;
 
-        $query34 = $this->bdd->prepare("UPDATE choix SET reponse_choix = :newGoodAnswer WHERE bonneReponse_choix = :bool AND id_question = :idQuestion");
-        $query34->bindParam(":newGoodAnswer", $newGoodAnswer);
-        $query34->bindParam(":bool", $bool);
-        $query34->bindParam(":idQuestion", $idQuestion);
-        $query34->execute();
+        $query2 = $this->bdd->prepare("UPDATE choix SET reponse_choix = :newGoodAnswer WHERE bonneReponse_choix = :bool AND id_question = :idQuestion");
+        $query2->bindParam(":newGoodAnswer", $newGoodAnswer);
+        $query2->bindParam(":bool", $bool);
+        $query2->bindParam(":idQuestion", $idQuestion);
+        $query2->execute();
     }
 
+    //Fonction qui permet de modifier une mauvaise réponse
     public function editBadAnswer($idQuizz, $newBadAnswer, $a)
     {
-        $query35 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
-        $query35->bindParam(":idQuizz", $idQuizz);
-        $query35->execute();
-        $data20 = $query35->fetchAll(PDO::FETCH_ASSOC);
+        $query1 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
+        $query1->bindParam(":idQuizz", $idQuizz);
+        $query1->execute();
+        $data1 = $query1->fetchAll(PDO::FETCH_ASSOC);
 
         $position = $a - 1;
-        $idQuestion = $data20[$position]["id_question"];
+        $idQuestion = $data1[$position]["id_question"];
         $bool = false;
 
-        $query36 = $this->bdd->prepare("SELECT * FROM choix WHERE bonneReponse_choix = :bool AND id_question = :idQuestion");
-        $query36->bindParam(":bool", $bool);
-        $query36->bindParam(":idQuestion", $idQuestion);
-        $query36->execute();
-        $data21 = $query36->fetchAll(PDO::FETCH_ASSOC);
+        $query2 = $this->bdd->prepare("SELECT * FROM choix WHERE bonneReponse_choix = :bool AND id_question = :idQuestion");
+        $query2->bindParam(":bool", $bool);
+        $query2->bindParam(":idQuestion", $idQuestion);
+        $query2->execute();
+        $data2 = $query2->fetchAll(PDO::FETCH_ASSOC);
 
-        $idChoix = $data21[$position]["id_choix"];
+        $idChoix = $data2[$position]["id_choix"];
 
-        $query37 = $this->bdd->prepare("UPDATE choix SET reponse_choix = :newBadAnswer WHERE id_choix = :idChoix");
-        $query37->bindParam(":newBadAnswer", $newBadAnswer);
-        $query37->bindParam(":idChoix", $idChoix);
-        $query37->execute();
+        $query3 = $this->bdd->prepare("UPDATE choix SET reponse_choix = :newBadAnswer WHERE id_choix = :idChoix");
+        $query3->bindParam(":newBadAnswer", $newBadAnswer);
+        $query3->bindParam(":idChoix", $idChoix);
+        $query3->execute();
     }
 
+    //Fonction qui permet de supprimer un Quizz
     public function deleteQuizz($idQuizz)
     {
-        $query38 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
-        $query38->bindParam(":idQuizz", $idQuizz);
-        $query38->execute();
-        $data22 = $query38->fetchAll(PDO::FETCH_ASSOC);
+        $query1 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
+        $query1->bindParam(":idQuizz", $idQuizz);
+        $query1->execute();
+        $data1 = $query1->fetchAll(PDO::FETCH_ASSOC);
 
-        $query39 = $this->bdd->prepare("DELETE FROM quizz WHERE id_quizz = :idQuizz");
-        $query39->bindParam(":idQuizz", $idQuizz);
-        $query39->execute();
+        $query2 = $this->bdd->prepare("DELETE FROM quizz WHERE id_quizz = :idQuizz");
+        $query2->bindParam(":idQuizz", $idQuizz);
+        $query2->execute();
 
-        foreach ($data22 as $row) {
-            $query40 = $this->bdd->prepare("DELETE FROM question WHERE id_question = :idQuestion");
-            $query40->bindParam(":idQuestion", $row["id_question"]);
-            $query40->execute();
+        foreach ($data1 as $row) {
+            $query3 = $this->bdd->prepare("DELETE FROM question WHERE id_question = :idQuestion");
+            $query3->bindParam(":idQuestion", $row["id_question"]);
+            $query3->execute();
         }
     }
 
+    //Fonction qui permet de récupérer le nombre de Question d'un Quizz
     public function getNumberQuestion($idQuizz)
     {
-        $query30 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
-        $query30->bindParam(":idQuizz", $idQuizz);
-        $query30->execute();
-        $data18 = $query30->fetchAll(PDO::FETCH_ASSOC);
+        $query1 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
+        $query1->bindParam(":idQuizz", $idQuizz);
+        $query1->execute();
+        $data1 = $query1->fetchAll(PDO::FETCH_ASSOC);
 
-        $nbrQuestion = count($data18);
+        $nbrQuestion = count($data1);
         return $nbrQuestion;
     }
 
-    
-//-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-//-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-     //Fonction qui permet d'afficher les questions et reponses
-     public function displayQuizzForm($idQuizz)
-     {
-        
-         $query19 = $this->bdd->prepare("SELECT * FROM quizz WHERE id_quizz = :idQuizz");
-         $query19->bindParam("idQuizz", $idQuizz);
-         $query19->execute();
-         $data10 = $query19->fetch(PDO::FETCH_ASSOC);
- 
-         $titreQuizz = $data10["titre_quizz"];
- 
-         $query20 = $this->bdd->prepare("SELECT * FROM quizz_question WHERE id_quizz = :idQuizz");
-         $query20->bindParam("idQuizz", $idQuizz);
-         $query20->execute();
-         $data11 = $query20->fetchAll(PDO::FETCH_ASSOC);
- 
-         echo "<h1>$titreQuizz</h1>";
-         echo "<form method='POST'>";
-
- 
-         $i = 1;
- 
-         foreach ($data11 as $row) {
-             $idQuestion = $row["id_question"];
-             $query21 = $this->bdd->prepare("SELECT * FROM question WHERE id_question = :idQuestion");
-             $query21->bindParam(":idQuestion", $idQuestion);
-             $query21->execute();
-             $data12 = $query21->fetch(PDO::FETCH_ASSOC);
- 
-             $intituleQuestion = $data12['intitule_question'];
-             $idQuestion = $data12["id_question"];
- 
-             echo "<p>Question $i : $intituleQuestion  </p><br>";
-
- 
- 
-             $bool = true;
- 
-             $query22 = $this->bdd->prepare("SELECT * FROM choix WHERE id_question = :idQuestion AND bonneReponse_choix = :goodAnswer");
-             $query22->bindParam(":idQuestion", $idQuestion);
-             $query22->bindParam(":goodAnswer", $bool);
-             $query22->execute();
-             $data13 = $query22->fetch(PDO::FETCH_ASSOC);
- 
-             $goodAnswer = $data13["reponse_choix"];
-             $goodAnswerId = $data13["id_choix"];
- 
-             $badAnswerId1 = $goodAnswerId + 1;
-             $badAnswerId2 = $goodAnswerId + 2;
-             $badAnswerId3 = $goodAnswerId + 3;
- 
-             $query23 = $this->bdd->prepare("SELECT * FROM choix WHERE id_choix = :idChoix");
-             $query23->bindParam(":idChoix", $badAnswerId1);
-             $query23->execute();
-             $data14 = $query23->fetch(PDO::FETCH_ASSOC);
- 
-             $query24 = $this->bdd->prepare("SELECT * FROM choix WHERE id_choix = :idChoix");
-             $query24->bindParam(":idChoix", $badAnswerId2);
-             $query24->execute();
-             $data15 = $query24->fetch(PDO::FETCH_ASSOC);
- 
-             $query25 = $this->bdd->prepare("SELECT * FROM choix WHERE id_choix = :idChoix");
-             $query25->bindParam(":idChoix", $badAnswerId3);
-             $query25->execute();
-             $data16 = $query25->fetch(PDO::FETCH_ASSOC);
- 
-             $badAnswer1 = $data14["reponse_choix"];
-             $badAnswer2 = $data15["reponse_choix"];
-             $badAnswer3 = $data16["reponse_choix"];
- 
-             
-             echo "<input type='radio' name='reponse$i'>";
-             echo "<label> Réponse $i ($goodAnswer) : </label><br>";
- 
- 
-             
-             echo "<input type='radio' name='reponse$i' value=''>";
-             echo "<label> Réponse $i-1 ($badAnswer1) : </label><br>";
- 
- 
-             
-             echo "<input type='radio' name='reponse$i'>";
-             echo "<label>Réponse $i-2 ($badAnswer2) : </label><br>";
- 
-             
-             echo "<input type='radio' name='reponse$i'>";
-             echo "<label> Réponse $i-3 ($badAnswer3) : </label><br><br>";
-             $i++;
-         }
- 
-         echo "<input type='submit' name='submit'>";
-         echo "</form>";
-         
-     }
+    //Fonction qui permet d'insérer le score d'un utilisateur dans la base de données
+    public function insertScore($idUser, $idQuizz, $score)
+    {
+        $query1 = $this->bdd->prepare("INSERT INTO utilisateur_quizz(id_utilisateur, id_quizz, score) VALUES (:idUser, :idQuizz, :score)");
+        $query1->bindParam(":idUser", $idUser);
+        $query1->bindParam(":idQuizz", $idQuizz);
+        $query1->bindParam(":score", $score);
+        $query1->execute();
+    }
 }

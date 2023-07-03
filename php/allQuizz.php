@@ -7,7 +7,6 @@ if (empty($_SESSION["id"])) {
 if ($_SESSION["role"] == 0) {
     header("Location: accessDenied.php");
 }
-
 ?>
 
 <!DOCTYPE html>

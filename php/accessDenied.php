@@ -1,13 +1,7 @@
 <?php
-if (isset($_SESSION["id"])) {
-    if ($_SESSION["role"] == 0) {
-        header("Location: admin.php");
-    } elseif ($_SESSION["role"] == 1) {
-        header("Location: quizzer.php");
-    } else {
-        header("Location: user.php");
-    }
-} else {
+require "classes.php";
+
+if (empty($_SESSION["id"])) {
     header("Location: login.php");
 }
 ?>
@@ -22,7 +16,19 @@ if (isset($_SESSION["id"])) {
 </head>
 
 <body>
+    <?php
+    if ($_SESSION["role"] == 1) {
+        require "headerQuizzer.php";
+    } elseif ($_SESSION["role"] == 2) {
+        require "headerUser.php";
+    } else {
+        require "headerAdmin.php";
+    }
+    ?>
     <p>Vous n'avez pas accès à cette page</p>
+    <?php
+    require "footer.php";
+    ?>
 </body>
 
 </html>

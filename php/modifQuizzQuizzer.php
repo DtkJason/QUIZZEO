@@ -11,8 +11,17 @@ if ($_SESSION["role"] == 2) {
     header("Location: user.php");
 }
 
-$idQuizz = $_GET["idQuizz"];
-$idUser = $_GET["idUser"];
+if (isset($_GET["idQuizz"])) {
+    $idQuizz = $_GET["idQuizz"];
+}
+
+if (isset($_GET["idUser"])) {
+    $idUser = $_GET["idUser"];
+}
+
+if (empty($_GET["idQuizz"]) || empty($_GET["idUser"])) {
+    header("Location: allPersonnalQuizz.php");
+}
 
 $modif = new Admin();
 
