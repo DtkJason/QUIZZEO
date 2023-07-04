@@ -119,14 +119,11 @@ $pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
           <div>
             <br>
             <div class="controlss">
-              <button class="ajout" onclick="ajout()">Ajouter une question</button>
-              <button class="suppr" onclick="suppr()">Supprimer une question</button>
+              <button class="ajout" onclick="ajout()">Ajouter question</button>
+              <button class="suppr" onclick="suppr()">Supprimer question</button>
             </div>
 
           </div>
-        </div>
-        <div class="modof modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
         </div>
       </div>
     </div>

@@ -616,7 +616,7 @@ class Admin extends ConnectionDB
         echo "<table>";
         echo "<thead>";
         echo "<tr>";
-        echo "<td>Nom du Quizz</td>";
+        echo "<td>Nom Quizz</td>";
         echo "<td>Difficulté Quizz</td>";
         echo "<td>Date de création</td>";
         echo "<td>Créateur</td>";
@@ -922,5 +922,40 @@ class Admin extends ConnectionDB
         $query1->bindParam(":idQuizz", $idQuizz);
         $query1->bindParam(":score", $score);
         $query1->execute();
+    }
+
+    public function displayScores($idUser)
+    {
+        $query1 = $this->bdd->prepare("SELECT * FROM utilisateur_quizz WHERE id_utilisateur = :idUser");
+        $query1->bindParam(":idUser", $idUser);
+        $query1->execute();
+        $data1 = $query1->fetchAll(PDO::FETCH_ASSOC);
+
+        echo "<h3>Vos parties</h3>";
+        echo "<table>";
+        echo "<thead>";
+        echo "<tr>";
+        echo "<td>Nom Quizz</td>";
+        echo "<td>Votre score</td>";
+        echo "</tr>";
+        echo "</thead>";
+        foreach ($data1 as $row) {
+            $idQuizz = $row["id_quizz"];
+            $query2 = $this->bdd->prepare("SELECT * FROM quizz WHERE id_quizz = :idQuizz");
+            $query2->bindParam(":idQuizz", $idQuizz);
+            $query2->execute();
+            $data2 = $query2->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($data2 as $row2) {
+                $nameQuizz = $row2["titre_quizz"];
+            }
+            $score = $row["score"];
+
+            echo "<tr>";
+            echo "<td>$nameQuizz</td>";
+            echo "<td>$score</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
     }
 }

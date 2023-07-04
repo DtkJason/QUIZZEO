@@ -44,7 +44,7 @@ function ajout() {
 
   var br = document.createElement("br");
   const qlabel = document.createElement("label");
-  const nqlabel = document.createTextNode(`question n°${indq} `);
+  const nqlabel = document.createTextNode(`Question n°${indq} `);
   qlabel.appendChild(nqlabel);
 
   const questio = document.createElement("input");
@@ -71,7 +71,7 @@ function ajout() {
   diffop1.appendChild(t1);
   const diffop2 = document.createElement("option");
   diffop2.value = "2";
-  var t2 = document.createTextNode("Intermediarie");
+  var t2 = document.createTextNode("Intermediaire");
   diffop2.appendChild(t2);
   const diffop3 = document.createElement("option");
   diffop3.value = "3";

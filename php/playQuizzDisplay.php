@@ -37,6 +37,9 @@ if (isset($_POST["submit"])) {
         header("Location: user.php?score=$compteur");
     }
 }
+
+$getPseudo = new Admin();
+$pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
 ?>
 
 <!DOCTYPE html>

@@ -26,7 +26,6 @@ $pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>Accueil - Administrateur</title>
 </head>
 
@@ -42,6 +41,11 @@ $pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
     <?php
     $lastScore = new Quizz();
     $score = $lastScore->recupLastScore($_SESSION["id"]);
+    ?>
+
+    <?php
+    $displayScores = new Admin();
+    $displayScores->displayScores($_SESSION["id"]);
     ?>
 
     <?php

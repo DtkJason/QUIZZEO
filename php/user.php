@@ -1,7 +1,6 @@
 <?php
 require "classes.php";
 
-
 if (empty($_SESSION["id"])) {
     header("Location: login.php");
 }
@@ -47,6 +46,11 @@ $pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
     <?php
     $lastScore = new Quizz();
     $score = $lastScore->recupLastScore($_SESSION["id"]);
+    ?>
+
+    <?php
+    $displayScores = new Admin();
+    $displayScores->displayScores($_SESSION["id"]);
     ?>
 
     <?php

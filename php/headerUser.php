@@ -1,5 +1,5 @@
 <header>
-    <img src="" alt="">
+    <p>QUIZZEO</p>
     <nav>
         <ul>
             <li><a href="user.php">Accueil</a></li>
