@@ -27,7 +27,7 @@ if (isset($_POST["submit"])) {
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="test.css" />
+    <link rel="stylesheet" href="../css/test.css" />
     <title>Connexion</title>
   </head>
 

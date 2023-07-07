@@ -1,4 +1,4 @@
-<!-- <?php
+ <?php
 require "classes.php";
 
 $register = new Authentification();
@@ -6,7 +6,7 @@ $register = new Authentification();
 if (isset($_POST["submit"])) {
     $register->registration($_POST["pseudo"], $_POST["email"], $_POST["password"], $_POST["confirmpassword"], $_POST["role"]);
 }
-?> -->
+?> 
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -19,7 +19,7 @@ if (isset($_POST["submit"])) {
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="test.css" />
+    <link rel="stylesheet" href="../css/test.css" />
     <title>Inscription</title>
   </head>
 
@@ -33,22 +33,6 @@ if (isset($_POST["submit"])) {
     ?>
     <div class="login-box">
       <h2>INSCRIPTION</h2>
-      <!-- <form method="POST">
-          <div class="user-box">
-            <input type="mail" name="email" />
-            <br />
-            <label>Email : </label>
-            <br /><br />
-          </div>
-          <div >
-            <input type="password" name="password" />
-            <br />
-            <label>Mot de passe : </label>
-            <br /><br />
-          </div>
-          <input type="ubmit" name="submit" value="Se connecter" /><br />
-          <a href="register.php">S'incrire</a>
-        </form> -->
 
       <form method="POST">
         <div class="user-box">

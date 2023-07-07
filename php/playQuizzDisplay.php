@@ -55,6 +55,10 @@ if (isset($_POST["submit"])) {
 </head>
 
 <body>
+<audio id="myAudio" autoplay loop>
+        <source src="Arthur Benson - She Is Whimsical.ogg" type="audio/ogg">
+        <source src="Arthur Benson - She Is Whimsical.mp3" type="audio/mpeg">
+    </audio>
     <?php
     if ($_SESSION["role"] == 0) {
         require "headerAdmin.php";
