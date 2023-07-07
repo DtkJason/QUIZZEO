@@ -7,6 +7,9 @@ if (empty($_SESSION["id"])) {
 
 $idUser = $_SESSION["id"];
 
+$getPseudo = new Admin();
+$pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
+
 $idQuizz = $_GET["idQuizz"];
 
 $playQuizz = new Admin();
@@ -37,9 +40,6 @@ if (isset($_POST["submit"])) {
         header("Location: user.php?score=$compteur");
     }
 }
-
-$getPseudo = new Admin();
-$pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
 ?>
 
 <!DOCTYPE html>
@@ -48,6 +48,9 @@ $pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php
+    require "css.php";
+    ?>
     <title>Quizz en cours</title>
 </head>
 
@@ -64,14 +67,29 @@ $pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
     }
     ?>
 
+
+    <?php
+    require "interro.php";
+    ?>
+   
+    <br><br><br>
+    <div class="slideshow-content">
     <?php
     $play = new Quizz();
     $play->displayQuizzForm($idQuizz);
     ?>
-
+        <a class="prev" onclick="plusSlides(-1)">Précédent</a> 
+        <a class="next" onclick="plusSlides(1)">Suivant</a>
+    </div>
+    
+    <?php
+    require "logo.php";
+    ?>
+   
     <?php
     require "footer.php";
     ?>
+<script src="../js/dynamicQuiz.js"></script>
 </body>
 
 </html>

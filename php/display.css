@@ -1,0 +1,63 @@
+
+
+
+/* Slideshow container */
+.slideshow-content {
+    position: relative;
+    background: #f1f1f1f1;
+  }
+  
+  /* Slides */
+  .divoqslide {
+    /* display: none;
+    transition: 2s; */
+    padding: 80px;
+    text-align: center;
+    animation: fader 1s;
+  }
+  h1{
+    text-align: center;
+  }
+  
+
+/* Next & previous buttons */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    bottom: 10%;
+    width: auto;
+    margin-top: -30px;
+    padding: 16px;
+    color: #888;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+  }
+  
+  /* Position the "next button" to the right */
+  .prev {
+    position: absolute;
+    right: 50%;
+    border-radius: 3px 0 0 3px;
+  }
+  .next {
+    position: absolute;
+    left: 50%;
+    border-radius: 3px 0 0 3px;
+  }
+  
+  /* On hover, add a black background color with a little bit see-through */
+  .prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+    color: white;
+  }
+  #myAudio{
+    display: none;
+  }
+
+
+  @keyframes fader {
+    from { opacity: 0.0; }
+    to   { opacity: 1.0; }
+  }

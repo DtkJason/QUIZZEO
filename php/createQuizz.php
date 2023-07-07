@@ -48,6 +48,9 @@ $pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <?php
+    require "css.php";
+    ?>
   <title>Créer Quizz</title>
 </head>
 
@@ -60,8 +63,14 @@ $pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
     require "headerQuizzer.php";
   }
   ?>
+    <?php
+    require "interro.php";
+    ?>
+    <div class="rolee">
+        <h2>Création de votre Quizz</h2><br>
+    </div>
 
-  <h2>Création de votre Quizz</h2><br>
+  
 
   <!-- Button trigger modal -->
 
@@ -76,7 +85,7 @@ $pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
   </div>
 
   <!-- Modal -->
-  <div class="modo modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modo modal bg-opacity-1 fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modoh modal-header">
@@ -84,7 +93,7 @@ $pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modob modal-body">
-          <div class="">
+          
             <form method="POST">
               <div id="field">
                 <label>Titre</label>
@@ -98,32 +107,29 @@ $pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
                   <option value="2">Intermédiaire</option>
                   <option value="3">Difficile</option>
                 </select><br>
-
-                <!-- <label>Question</label><br>
-                <input type="text" name="question-n1" required=""> <br>
-                <label>Reponse</label><br>
-                <input id="rep" type="text" name="text" class="text" placeholder="entrer une reponse"><br>
               </div>
-              <br>
-              <span>autre question</span> -->
+
                 <div id="nformi">
                 </div>
                 <input type="submit" name="submit" id="" value="Valider"><br>
-                <!-- <input id="demo" type="text" name="demo">1</input> <span id="demo" name="counter"  value= 1 ></span> -->
+               
 
             </form>
 
             <div id="nformu">
             </div>
-          </div>
+          
           <div>
             <br>
             <div class="controlss">
-              <button class="ajout" onclick="ajout()">Ajouter question</button>
-              <button class="suppr" onclick="suppr()">Supprimer question</button>
+              <button class="ajout" onclick="ajout()">Ajouter une question</button>
+              <button class="suppr" onclick="suppr()">Supprimer une question</button>
             </div>
 
           </div>
+        </div>
+        <div class="modof modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
         </div>
       </div>
     </div>
@@ -131,8 +137,11 @@ $pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 
-  <script src="createQuizz.js"></script>
+  <script src="../js/createQuizz.js"></script>
 
+<?php
+    require "logo.php";
+    ?>
   <?php
   require "footer.php";
   ?>

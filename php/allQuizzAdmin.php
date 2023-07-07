@@ -24,6 +24,9 @@ $pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php
+    require "css.php";
+    ?>
     <title>Liste Quizz - Administrateur</title>
 </head>
 
@@ -33,13 +36,22 @@ $pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
     require "headerAdmin.php";
     ?>
 
-    <h2>Liste de tous les Quizz</h2>
+     <?php
+    require "interro.php";
+    ?>
+
+<div class="rolee">
+        <h2>Liste de tous les Quizz</h2>
+    </div>
 
     <?php
     $display = new Admin();
     $display->listQuizzAdmin();
     ?>
 
+    <?php
+    require "logo.php";
+    ?>
     <?php
     require "footer.php";
     ?>

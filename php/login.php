@@ -7,15 +7,6 @@ if (isset($_GET["reg"])) {
     echo '</script>';
 }
 
-if (isset($_SESSION["id"])) {
-    if ($_SESSION["role"] == 0) {
-        header("Location: admin.php");
-    } elseif ($_SESSION["role"] == 1) {
-        header("Location: quizzer.php");
-    } else {
-        header("Location: user.php");
-    }
-}
 
 if (isset($_POST["submit"])) {
     $login = new Authentification();
@@ -23,37 +14,55 @@ if (isset($_POST["submit"])) {
     $_SESSION["id"] = $login->getIdUser();
     $_SESSION["role"] = $login->getRoleUser();
 }
-?>
+?> 
 
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="test.css" />
     <title>Connexion</title>
-</head>
+  </head>
 
-<body>
-    <?php
+  <body>
+  <?php
     require "headerOffline.php";
     ?>
-
-    <form method="POST">
-        <label for="mail">Email : </label>
-        <br>
-        <input type="mail" name="email" placeholder="Email" required>
-        <br><br>
-        <label for="password">Mot de passe : </label>
-        <br>
-        <input type="password" name="password" placeholder="Mot de passe" required>
-        <br><br>
-        <input type="submit" name="submit" value="Valider">
-    </form>
+    <?php
+    require "interro.php";
+    ?>
+    <div class="login-box">
+      <h2>CONNEXION</h2>
+      <form method="POST">
+        <div class="user-box">
+          <input type="mail" name="email" />
+          <br />
+          <label>Email : </label>
+          <br /><br />
+        </div>
+        <div class="user-box">
+          <input type="password" name="password" />
+          <br />
+          <label>Mot de passe : </label>
+          <br /><br />
+        </div>
+        <input class="conet" type="submit" name="submit" value="Se connecter" /><br />
+        <a href="register.php">S'incrire</a>
+      </form>
+    </div>
+    <?php
+    require "logo.php";
+    ?>
 
     <?php
     require "footer.php";
     ?>
-</body>
-
+  </body>
 </html>

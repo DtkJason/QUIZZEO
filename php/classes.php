@@ -160,15 +160,11 @@ class Quizz extends ConnectionDB
         $query1->execute();
         $data1 = $query1->fetchAll(PDO::FETCH_ASSOC);
 
-        echo "<table>";
-        echo "<thead>";
-        echo "<tr>";
-        echo "<td>Nom du Quizz</td>";
-        echo "<td>Difficulté Quizz</td>";
-        echo "<td>Date de création</td>";
-        echo "<td>Créateur</td>";
-        echo "</tr>";
-        echo "</thead>";
+
+        // echo "<p>Nom du Quizz</p>";
+        // echo "<p>Difficulté Quizz</p>";
+        // echo "<p>Date de création</p>";
+        // echo "<p>Créateur</p>";
         foreach ($data1 as $row) {
             $idUserQuizz = $row["id_utilisateur"];
             $query2 = $this->bdd->prepare("SELECT * FROM utilisateur WHERE id_utilisateur = :idUser");
@@ -178,22 +174,29 @@ class Quizz extends ConnectionDB
 
             $userPseudo = $data2["pseudo_utilisateur"];
             $idQuizz = $row["id_quizz"];
-
-            echo "<tr>";
-            echo "<td>" . $row["titre_quizz"] . "</td>";
+            $rado = rand(1, 3);
+    
+            echo "<div class='carder'>";
+            echo "<div class='icon'>";
+            echo "<img class='imog' src='../css/inter".$rado.".png' alt=''>";
+            echo "</div>";
+            echo "<p class='title'>" . $row["titre_quizz"] . "</p>";
+            echo "<div class='text'>";
+            echo "<p>Difficulte : ";
             if ($row["difficulte_quizz"] == 1) {
-                echo "<td>Facile</td>";
+                echo "Facile</p>";
             } elseif ($row["difficulte_quizz"] == 2) {
-                echo "<td>Intermédiaire</td>";
+                echo "Intermédiaire</p>";
             } else {
-                echo "<td>Difficile</td>";
+                echo "Difficile</p>";
             }
-            echo "<td>" . $row["date_creation_quizz"] . "</td>";
-            echo "<td>" . $userPseudo . "</td>";
-            echo "<td><a href='playQuizzDisplay.php?idQuizz=$idQuizz'>Jouer</a></td>";
-            echo "</tr>";
+            echo "<p>" . $row["date_creation_quizz"] . "</p>";
+            echo "<p>Créateur : " . $userPseudo . "</p>";
+            echo "<a href='playQuizzDisplay.php?idQuizz=$idQuizz'><img src='../css/jouer.png' alt=''></a>";
+            echo "</div>";
+            echo "</div>";
         }
-        echo "</table>";
+
     }
 
     //Fonction qui permet d'afficher la liste des Quizz en fonction du Quizzer
@@ -205,32 +208,34 @@ class Quizz extends ConnectionDB
         $data1 = $query1->fetchAll(PDO::FETCH_ASSOC);
 
 
-        echo "<table>";
-        echo "<thead>";
-        echo "<tr>";
-        echo "<td>Nom du Quizz</td>";
-        echo "<td>Difficulté Quizz</td>";
-        echo "<td>Date de création</td>";
-        echo "</tr>";
-        echo "</thead>";
+        
         foreach ($data1 as $row) {
-            echo "<tr>";
-            echo "<td>" . $row["titre_quizz"] . "</td>";
-            if ($row["difficulte_quizz"] == 1) {
-                echo "<td>Facile</td>";
-            } elseif ($row["difficulte_quizz"] == 2) {
-                echo "<td>Intermédiaire</td>";
-            } else {
-                echo "<td>Difficile</td>";
-            }
+            $rado = rand(1, 3);
 
+            echo "<div class='carder'>";
+            echo "<div class='icon'>";
+            echo "<img class='imog' src='../css/inter".$rado.".png' alt=''>";
+            echo "</div>";
+
+            
+            echo "<p class='title'>" . $row["titre_quizz"] . "</p>";
+            echo "<div class='text'>";
+            echo "<p>Difficulte : ";
+            if ($row["difficulte_quizz"] == 1) {
+                echo "Facile</p>";
+            } elseif ($row["difficulte_quizz"] == 2) {
+                echo "Intermédiaire</p>";
+            } else {
+                echo "<Difficile</p>";
+            }
             $idQuizz = $row["id_quizz"];
 
-            echo "<td>" . $row["date_creation_quizz"] . "</td>";
-            echo "<td><a href='playQuizzDisplay.php?idQuizz=$idQuizz'>Jouer</a></td>";
-            echo "<td><a href='modifQuizzQuizzer.php?idQuizz=$idQuizz&idUser=$idUserQuizz'>Modifier</a></td>";
-            echo "<td><a href='deleteQuizz.php?idQuizz=$idQuizz'>Supprimer</a></td>";
-            echo "</tr>";
+            echo "<p>" . $row["date_creation_quizz"] . "</p>";
+            echo "<p><a href='playQuizzDisplay.php?idQuizz=$idQuizz'><img src='../css/jouer.png' alt=''></a></p>";
+            echo "<p><a href='modifQuizzQuizzer.php?idQuizz=$idQuizz&idUser=$idUserQuizz'><img src='../css/editer.png' alt='' /></a></p>";
+            echo "<p><a href='deleteQuizz.php?idQuizz=$idQuizz'><img src='../css/supprimer.png' alt='' /></a></p>";
+            echo "</div>";
+            echo "</div>";
         }
     }
 
@@ -247,7 +252,9 @@ class Quizz extends ConnectionDB
         $query2->bindParam("idQuizz", $idQuizz);
         $query2->execute();
         $data2 = $query2->fetchAll(PDO::FETCH_ASSOC);
-
+    //    ++++++++++++++++++++++++++++++++++++++++++++++++++
+    //    ++++++++++++++++++++++++++++++++++++++++++++++++++
+    //    ++++++++++++++++++++++++++++++++++++++++++++++++++
         echo "<h1>$titreQuizz</h1>";
         echo "<form method='POST'>";
 
@@ -262,7 +269,7 @@ class Quizz extends ConnectionDB
 
             $intituleQuestion = $data3['intitule_question'];
             $idQuestion = $data3["id_question"];
-
+            echo"<div class='divoqslide'>";
             echo "<p>Question $i : $intituleQuestion  </p><br>";
 
             $bool = true;
@@ -313,21 +320,23 @@ class Quizz extends ConnectionDB
             $answer2 = $tab[$keys[1]];
             $answer3 = $tab[$keys[2]];
             $answer4 = $tab[$keys[3]];
+            echo"<div class='repoo'>";
+            echo "<input type='radio' id='radio1-$i' name='reponse$i' value='$answer1'>";
+            echo "<label for='radio1-$i'>  $answer1  </label>";
 
-            echo "<input type='radio' name='reponse$i' value='$answer1'>";
-            echo "<label> Réponse $i ($answer1) : </label><br>";
+            echo "<input type='radio' id='radio2-$i' name='reponse$i' value='$answer2'>";
+            echo "<label for='radio2-$i'>  $answer2  </label><br>";
 
-            echo "<input type='radio' name='reponse$i' value='$answer2'>";
-            echo "<label> Réponse $i-1 ($answer2) : </label><br>";
+            echo "<input type='radio' id='radio3-$i' name='reponse$i' value='$answer3'>";
+            echo "<label for='radio3-$i'> $answer3  </label>";
 
-            echo "<input type='radio' name='reponse$i' value='$answer3'>";
-            echo "<label>Réponse $i-2 ($answer3) : </label><br>";
-
-            echo "<input type='radio' name='reponse$i' value='$answer4'>";
-            echo "<label> Réponse $i-3 ($answer4) : </label><br><br>";
+            echo "<input type='radio' id='radio4-$i' name='reponse$i' value='$answer4'>";
+            echo "<label for='radio4-$i'>  $answer4  </label><br><br>";
             $i++;
+            echo"</div>";
+            echo"</div>";
         }
-        echo "<input type='submit' name='submit'>";
+        echo "<input class='valide' type='submit' name='submit' value'valider'>";
         echo "</form>";
     }
 
@@ -460,43 +469,43 @@ class Admin extends ConnectionDB
     public function displayUsers()
     {
         //Requête qui permet de sélectionner tous les utilisateurs dans la table utilisateur
-        $query1 = $this->bdd->prepare("SELECT * FROM utilisateur");
+        $query1 = $this->bdd->prepare("SELECT * FROM utilisateur WHERE role_utilisateur = 1 OR role_utilisateur = 2");
         $query1->execute();
 
         //Stockage des informations récupérées dans un tableau associatif
         $data1 = $query1->fetchAll(PDO::FETCH_ASSOC);
 
-        echo "<table>";
-        echo "<thead>";
-        echo "<tr>";
-        echo "<td>ID</td>";
-        echo "<td>Pseudo</td>";
-        echo "<td>Email</td>";
-        echo "<td>Type de compte</td>";
-        echo "</tr>";
-        echo "</thead>";
 
         //Boucle qui permet l'affichage de chaque utilisateur
         foreach ($data1 as $row) {
+            $rado = rand(1, 3);
+
+            echo "<div class='carder'>";
+            echo "<div class='icon'>";
+            echo "<img class='imog' src='../css/uicon".$rado.".png' alt='' style='height: 64px; width: 64px;'>";
+            echo "</div>";
+
             if ($row["role_utilisateur"] != 0) {
                 $idUser = $row["id_utilisateur"];
                 $pseudoUser = $row["pseudo_utilisateur"];
 
-                echo "<tr>";
-                echo "<td>" . $idUser . "</td>";
-                echo "<td>" . $pseudoUser . "</td>";
-                echo "<td>" . $row["email_utilisateur"] . "</td>";
+                echo "<p class='title'>" . $pseudoUser . "</p>";
+                echo "<div class='text'>";
+                echo "<p>ID : " . $idUser . "</p>";
+
+                echo "<p>Email : ". $row["email_utilisateur"] . "</p> ";
                 if ($row["role_utilisateur"] == 1) {
-                    echo "<td>Quizzer</td>";
+                    echo "<p>Role : Quizzer</p>";
                 } else {
-                    echo "<td>Utilisateur</td>";
+                    echo "<p>Role : Utilisateur</p>";
                 }
-                echo "<td><a href='editMember.php?id=$idUser&pseudo=$pseudoUser'>Modifier</a></td>";
-                echo "<td><a href='deleteMember.php?id=$idUser'>Supprimer</a></td>";
-                echo "</tr>";
+                echo "<p><a href='editMember.php?id=$idUser&pseudo=$pseudoUser'><img src='../css/parametres.png' alt='' style='height: 32px; width: 32px;' ></a></p>";
+                echo "<p><a href='deleteMember.php?id=$idUser'><img src='../css/deletuser.png' alt='' ></a></p>";
+                echo "</div>";
+                echo "</div>";
             }
         }
-        echo "</table>";
+        
     }
 
     //Fonction qui permet de modifier le propriétaire d'un quizz
@@ -613,15 +622,6 @@ class Admin extends ConnectionDB
         $query1->execute();
         $data1 = $query1->fetchAll(PDO::FETCH_ASSOC);
 
-        echo "<table>";
-        echo "<thead>";
-        echo "<tr>";
-        echo "<td>Nom Quizz</td>";
-        echo "<td>Difficulté Quizz</td>";
-        echo "<td>Date de création</td>";
-        echo "<td>Créateur</td>";
-        echo "</tr>";
-        echo "</thead>";
         foreach ($data1 as $row) {
             $idUserQuizz = $row["id_utilisateur"];
             $query2 = $this->bdd->prepare("SELECT * FROM utilisateur WHERE id_utilisateur = :idUser");
@@ -645,24 +645,33 @@ class Admin extends ConnectionDB
             $data4 = $query4->fetchAll(PDO::FETCH_ASSOC);
 
             $nbrQuestion = count($data4);
+            $rado = rand(1, 3);
 
-            echo "<tr>";
-            echo "<td>" . $row["titre_quizz"] . "</td>";
+            echo "<div class='carder'>";
+            echo "<div class='icon'>";
+            echo "<img class='imog' src='../css/inter".$rado.".png' alt=''>";
+            echo "</div>";
+
+            
+            echo "<p class='title'>" . $row["titre_quizz"] . "</p>";
+            echo "<div class='text'>";
+            echo "<p>Difficulte : ";
             if ($row["difficulte_quizz"] == 1) {
-                echo "<td>Facile</td>";
+                echo "Facile</p>";
             } elseif ($row["difficulte_quizz"] == 2) {
-                echo "<td>Intermédiaire</td>";
+                echo "Intermédiaire</p>";
             } else {
-                echo "<td>Difficile</td>";
+                echo "<Difficile</p>";
             }
-            echo "<td>" . $row["date_creation_quizz"] . "</td>";
-            echo "<td>" . $userPseudo . "</td>";
-            echo "<td><a href='playQuizzDisplay.php?idQuizz=$idQuizz'>Jouer</a></td>";
-            echo "<td><a href='modifQuizz.php?idQuizz=$idQuizz&nbrQuestion=$nbrQuestion'>Modifier</a></td>";
-            echo "<td><a href='deleteQuizz.php?idQuizz=$idQuizz'>Supprimer</a></td>";
-            echo "</tr>";
+            echo "<p>" . $row["date_creation_quizz"] . "</p>";
+            echo "<p>" . $userPseudo . "</p>";
+            echo "<p><a href='playQuizzDisplay.php?idQuizz=$idQuizz'><img src='../css/jouer.png' alt=''></a></p>";
+            echo "<p><a href='modifQuizz.php?idQuizz=$idQuizz&nbrQuestion=$nbrQuestion'><img src='../css/editer.png' alt='' /></a></p>";
+            echo "<p><a href='deleteQuizz.php?idQuizz=$idQuizz'><img src='../css/supprimer.png' alt='' /></a></p>";
+            echo "</div>";
+            echo "</div>";
         }
-        echo "</table>";
+        
     }
 
     //Fonction qui permet de créer le formulaire qui va permettre de modifier un Quizz

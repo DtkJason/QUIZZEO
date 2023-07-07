@@ -5,7 +5,7 @@ html {
     margin:0;
     padding:0;
     font-family: sans-serif;
-    background: linear-gradient(#050505,#221F3B, #050505) ;
+    background: linear-gradient(#caf0f8, #00b4d8) ;
     transition:  300ms;
   }
 
@@ -85,9 +85,6 @@ html {
     text-align: center;
   }
   
-  .userbox{
-    margin-top: 20px;
-  }
   .login-box .user-box {
     position: relative;
   }

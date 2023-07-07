@@ -1,5 +1,11 @@
+
 <header>
-    <h1>QUIZZEO</h1>
-    <a href="login.php">Connexion</a>
-    <a href="register.php">Inscription</a>
+
+    <img src='../css/quizzeo.png' alt='' style='height: 75px; width: 140px;' >
+    <nav class="allNav">
+        <ul class="navlinks">
+            <li><a href="login.php" class="link">Connexion</a></li>
+            <li><a href="register.php" class="link">Inscription</a></li>
+        </ul>
+    </nav>
 </header>

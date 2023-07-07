@@ -1,0 +1,51 @@
+
+body {
+    margin:0;
+    padding:20px;
+    font-family: sans-serif;
+    background-color:  #92edff ;
+    transition:  300ms;
+  }
+  .cardo{
+    background-color:#8065a088;
+    width: 650px;
+    padding: 5px;
+    margin: 40px;
+  }
+  .modoh{
+    background-color: rgb(127, 190, 209);
+  }
+  .modob{
+    background-color: rgb(89, 136, 150);
+  }
+  .modof{
+    background-color: rgb(127, 190, 209);
+  }
+  .cardi{
+    background-color:#8065a088;
+    margin-left: 50%;
+    margin-right: 50%;
+    margin-top: 10px;
+    margin-bottom: 40px;
+
+    width: 300px; 
+    padding: 5px;
+
+  }
+  .caro{
+    width: auto; 
+    height: auto;
+  }
+
+  .cardu{
+    background-color:#24c7d3d2;
+
+
+  }
+
+  #demo{
+    display: none;
+  }
+
+
+  

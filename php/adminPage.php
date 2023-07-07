@@ -25,6 +25,10 @@ $pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <?php
+    require "css.php";
+    ?>
     <title>Gérer Membres - Administrateur</title>
 </head>
 
@@ -33,13 +37,21 @@ $pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
     <?php
     require "headerAdmin.php";
     ?>
-    <h2>Gérer les membres</h2>
+    <?php
+    require "interro.php";
+    ?>
+    <div class="rolee">
+        <h2>Gérer les membres</h2>
+    </div>
+    
 
     <?php
     $display = new Admin();
     $display->displayUsers();
     ?>
-
+    <?php
+    require "logo.php";
+    ?>
     <?php
     require "footer.php";
     ?>

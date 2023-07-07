@@ -59,6 +59,9 @@ $pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php
+    require "css.php";
+    ?>
     <title>Modification de Quizz (Admin)</title>
 </head>
 
@@ -66,12 +69,26 @@ $pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
     <?php
     require "headerAdmin.php";
     ?>
+       <?php
+    require "interro.php";
+    ?>
 
-    <?php
+
+        <div class="card">
+            <div class="container vertical-scrollable">
+                <div class="row text-center">
+                <?php
     $form = new Admin();
     $form->editQuizzForm($_GET["idQuizz"]);
     ?>
+                </div>
 
+             </div>
+    </div>
+
+<?php
+    require "logo.php";
+    ?>
     <?php
     require "footer.php";
     ?>

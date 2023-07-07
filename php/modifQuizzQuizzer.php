@@ -50,6 +50,8 @@ for ($i = 1; $i <= $nbrQuestion; $i++) {
         }
     }
 }
+$getPseudo = new Admin();
+$pseudo = $getPseudo->getUserPseudo($_SESSION["id"]);
 ?>
 
 <!DOCTYPE html>
@@ -58,6 +60,10 @@ for ($i = 1; $i <= $nbrQuestion; $i++) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <?php
+    require "css.php";
+    ?>
     <title>Modification de Quizz (Quizzer)</title>
 </head>
 
@@ -65,12 +71,23 @@ for ($i = 1; $i <= $nbrQuestion; $i++) {
     <?php
     require "headerQuizzer.php";
     ?>
-
+    <?php
+    require "interro.php";
+    ?>
+     <div class="card carrr">
+            <div class="container vertical-scrollable">
+                <div class="row text-center">
     <?php
     $form = new Admin();
     $form->editQuizzForm($idQuizz);
     ?>
+                    </div>
 
+</div>
+</div>
+    <?php
+    require "logo.php";
+    ?>
     <?php
     require "footer.php";
     ?>

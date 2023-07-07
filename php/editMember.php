@@ -35,6 +35,9 @@ if (!isset($_POST["newpseudo"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php
+    require "css.php";
+    ?>
     <title>Modifier utilisateur</title>
 </head>
 
@@ -42,9 +45,16 @@ if (!isset($_POST["newpseudo"])) {
     <?php
     require "headerAdmin.php";
     ?>
+    *    <?php
+    require "interro.php";
+    ?>
+
 
     <h2>Modifier utilisateur : <?php echo $pseudo; ?></h2>
     <br>
+    <div class="card">
+            <div class="container vertical-scrollable">
+                <div class="row text-center">
     <form method="POST"><b>Modifier mot de passe :</b>
         <br><br>
         <label>Nouveau mot de passe : </label>
@@ -75,7 +85,14 @@ if (!isset($_POST["newpseudo"])) {
         <br><br>
         <input type="submit" name="submitemail" value="Valider">
     </form>
+    </div>
 
+</div>
+</div>
+    <?php
+    require "logo.php";
+    ?>
+   
     <?php
     require "footer.php";
     ?>

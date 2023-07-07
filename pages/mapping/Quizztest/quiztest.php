@@ -42,16 +42,19 @@
                         <input type="text" name="question-n1" required=""> <br>
                         <label>Reponse</label><br>
                         <input id="rep" type="text" name="text" class="text"  placeholder="entrer une reponse"><br>
-                       
+                        <label>nombre de question</label>
+                        <input  type="text" id="dezmo" name="nqu" required=""> <br>
                     </div>
                     <br>
                   <span>autre question</span>
+                  <button class="ajout"  onclick="ajout()">Ajout une question</button>
                   <div id="nformi">
                   </div>
                   <input type="submit" name="" id="" value="submit"><br>
                   <!-- <input id="demo" type="text" name="demo">1</input> <span id="demo" name="counter"  value= 1 ></span> --> 
                     
                 </form>
+                
 
                 <div id="nformu">
                 </div>
@@ -64,7 +67,7 @@
                     <!-- <button class="addquest" id="addo" onclick="addquest()">add question</button> -->
                   </div><br>
                   <div class="controlss">
-                    <button class="ajout"  onclick="ajout()">Ajout une question</button>
+                    
                     <button class="suppr" onclick="suppr()">suppr les question</button>
                   </div>
                   
